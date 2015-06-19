@@ -45,7 +45,7 @@ public class Home extends ActionBarActivity {
     private void setUpNavDrawer() {
         if (mToolbar != null) {
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            //mDrawerLayout.setStatusBarBackground(R.color.primary_dark);
+
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
