@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:checked="true"
+            android:title="Home" />
+        <item
+            android:id="@+id/action_setup"
+            android:icon="@drawable/ic_build_black_24dp"
+            android:title="Setup" />
+        <!-- android:icon="@drawable/ic_action_add" -->
+        <item
+            android:id="@+id/action_log"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="Log" />
+    </group>
+</menu>

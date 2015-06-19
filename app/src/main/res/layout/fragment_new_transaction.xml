@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.gmail.rixx.justin.envelopebudget.NewTransactionActivityFragment">
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:ms_alignLabels="false"
+        app:ms_arrowColor="@color/divider"
+        app:ms_arrowSize="16dp"
+        app:ms_baseColor="@color/divider"
+        app:ms_multiline="false"
+        app:ms_thickness="1dp" />
+
+    <TextView
+        android:id="@+id/dollar_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/category_spinner"
+        android:layout_marginTop="10dp"
+        android:text="$"
+        android:textSize="34sp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_dollar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/category_spinner"
+        android:layout_toEndOf="@id/dollar_textview"
+        android:layout_toRightOf="@id/dollar_textview">
+
+        <EditText
+            android:id="@+id/amount_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Amount"
+            android:inputType="numberDecimal" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/input_layout_dollar">
+
+        <EditText
+            android:id="@+id/comments_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Comments"
+            android:inputType="textCapSentences" />
+    </android.support.design.widget.TextInputLayout>
+
+</RelativeLayout>
