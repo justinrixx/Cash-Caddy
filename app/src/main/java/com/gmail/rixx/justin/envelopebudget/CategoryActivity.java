@@ -28,7 +28,9 @@ public class CategoryActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.abc_ic_clear_mtrl_alpha);
+
+            // set the title
+            getSupportActionBar().setTitle(getIntent().getStringExtra(getString(R.string.intent_extra_category_name)));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();

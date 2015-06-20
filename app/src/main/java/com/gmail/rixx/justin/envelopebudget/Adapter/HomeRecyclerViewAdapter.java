@@ -1,11 +1,14 @@
 package com.gmail.rixx.justin.envelopebudget.Adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gmail.rixx.justin.envelopebudget.CategoryActivity;
 import com.gmail.rixx.justin.envelopebudget.HomeFragment.Category;
 import com.gmail.rixx.justin.envelopebudget.R;
 
@@ -53,7 +56,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View itemView;
         public TextView categoryTextView;
         public TextView netTextView;
@@ -61,9 +64,24 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         public ViewHolder(View itemView) {
             super(itemView);
 
+            Log.i("HomeRecyclerViewAdapter", "In ViewHolder constructor");
+
             this.itemView = itemView;
+            itemView.setOnClickListener(this);
             categoryTextView = (TextView) itemView.findViewById(R.id.category_name_textview);
             netTextView = (TextView) itemView.findViewById(R.id.category_net_textview);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Log.i("HomeRecyclerViewAdapter", "In ViewHolder onClick");
+
+            // launch the category activity
+            Intent i = new Intent(itemView.getContext(), CategoryActivity.class);
+            i.putExtra(itemView.getContext().getString(R.string.intent_extra_category_name),
+                    categoryTextView.getText().toString());
+            itemView.getContext().startActivity(i);
         }
     }
 }
