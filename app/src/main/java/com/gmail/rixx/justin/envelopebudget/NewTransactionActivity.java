@@ -1,7 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget;
 
 import android.os.Build;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +35,7 @@ public class NewTransactionActivity extends AppCompatActivity {
     }
 
     private void setUpOnClickListeners() {
-        ((FloatingActionButton) findViewById(R.id.fab)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.CategoryActivity;
-import com.gmail.rixx.justin.envelopebudget.HomeFragment.Category;
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
@@ -37,7 +37,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.categoryTextView.setText(data.get(position).getCategory());
 
         // is the net positive or negative?
-        double d = data.get(position).getValue();
+        double d = data.get(position).getAmount();
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (d < 0.0) {

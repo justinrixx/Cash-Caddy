@@ -21,6 +21,12 @@ public class Category {
         this.refreshCode = refreshCode;
     }
 
+    // TODO remove this once HomeFragment no longer uses it
+    public Category(String category, double amount) {
+        this.category = category;
+        this.amount = amount;
+    }
+
     public String getCategory() {
         return category;
     }

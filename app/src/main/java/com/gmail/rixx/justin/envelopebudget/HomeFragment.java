@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 
 import java.util.ArrayList;
 
@@ -73,31 +74,5 @@ public class HomeFragment extends Fragment {
         list.add(new Category("Other Stuff", 23.54));
 
         return list;
-    }
-
-    public class Category {
-        private String category;
-        private double value;
-
-        public Category(String category, double value) {
-            this.category = category;
-            this.value = value;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public double getValue() {
-            return value;
-        }
-
-        public void setValue(double value) {
-            this.value = value;
-        }
     }
 }
