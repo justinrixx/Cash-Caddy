@@ -17,6 +17,7 @@ public class ListDialog extends DialogFragment {
     private String result;
     private String title;
 
+
     public String getResult() {
         return result;
     }
@@ -31,11 +32,21 @@ public class ListDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        String choice = ((TextView) getActivity().findViewById(R.id.dropdown)).getText().toString();
+        int position = 0;
+
+        // find out which one should be checked
+        for (int i = 0; i < data.length; i++) {
+            if (data[i].equals(choice)) {
+                position = i;
+            }
+        }
+
         // set the title
         builder.setTitle(title)
 
         // set the list of choices
-            .setSingleChoiceItems(data, 0, new DialogInterface.OnClickListener() {
+            .setSingleChoiceItems(data, position, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     result = data[which];
@@ -45,7 +56,9 @@ public class ListDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Set the text of the textview
-                        ((TextView) getActivity().findViewById(R.id.dropdown)).setText(result);
+                        if (result != null) {
+                            ((TextView) getActivity().findViewById(R.id.dropdown)).setText(result);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
