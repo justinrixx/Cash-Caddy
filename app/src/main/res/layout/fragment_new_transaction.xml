@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,17 +8,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gmail.rixx.justin.envelopebudget.NewTransactionActivityFragment">
 
-    <fr.ganfra.materialspinner.MaterialSpinner
-        android:id="@+id/category_spinner"
+    <TextView
+        android:id="@+id/dropdown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:ms_alignLabels="false"
-        app:ms_arrowColor="@color/divider"
-        app:ms_arrowSize="16dp"
-        app:ms_baseColor="@color/divider"
-        app:ms_multiline="false"
-        app:ms_thickness="1dp" />
+        android:textSize="20sp"/>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_below="@id/dropdown"
+        android:layout_margin="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/divider" />
 
     <TextView
         android:id="@+id/dollar_textview"
@@ -27,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/category_spinner"
+        android:layout_below="@id/separator"
         android:layout_marginTop="10dp"
         android:text="$"
         android:textSize="34sp" />
@@ -38,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/category_spinner"
+        android:layout_below="@id/separator"
         android:layout_toEndOf="@id/dollar_textview"
         android:layout_toRightOf="@id/dollar_textview">
 

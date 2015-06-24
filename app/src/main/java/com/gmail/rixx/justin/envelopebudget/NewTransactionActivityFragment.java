@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import fr.ganfra.materialspinner.MaterialSpinner;
-
 
 /**
  * A placeholder fragment containing a simple view.
@@ -19,7 +15,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class NewTransactionActivityFragment extends Fragment {
 
     private ArrayList<String> categories;
-    private MaterialSpinner mSpinner;
+    private TextView popup;
 
     public NewTransactionActivityFragment() {
     }
@@ -33,24 +29,39 @@ public class NewTransactionActivityFragment extends Fragment {
         categories = new ArrayList<>();
         populateData();
 
-        // set up spinner
-        mSpinner = (MaterialSpinner) rootView.findViewById(R.id.category_spinner);
-        setUpSpinner();
+        // set up popup
+        popup = (TextView) rootView.findViewById(R.id.dropdown);
+        setUpPopup();
 
         return rootView;
     }
 
-    private void setUpSpinner() {
+    private void setUpPopup() {
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getActivity(),
-                android.R.layout.simple_spinner_item, categories);
+        if (categories.size() > 0) {
+            popup.setText(categories.get(0));
+        } else {
+            popup.setText("No category");
+        }
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a list fragment
+                ListDialog dialog = new ListDialog();
 
-        // Apply the adapter to the spinner
-        mSpinner.setAdapter(adapter);
+                String[] data = new String[categories.size()];
+                data = categories.toArray(data);
+
+                Bundle args = new Bundle();
+                args.putStringArray("DATA", data);
+                args.putSerializable("TITLE", "Category");
+
+                dialog.setArguments(args);
+
+                dialog.show(getFragmentManager(), null);
+            }
+        });
     }
 
     private void populateData() {
