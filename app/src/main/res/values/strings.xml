@@ -7,4 +7,5 @@
     <string name="remainder_text">Remainder:</string>
     <string name="intent_extra_category_name">CATEGORY_NAME</string>
     <string name="title_activity_setup">Setup</string>
+    <string name="title_activity_edit_category">EditCategoryActivity</string>
 </resources>

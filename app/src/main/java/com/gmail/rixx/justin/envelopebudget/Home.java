@@ -3,6 +3,7 @@ package com.gmail.rixx.justin.envelopebudget;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +20,7 @@ public class Home extends AppCompatActivity {
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private Context mContext = this;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,27 @@ public class Home extends AppCompatActivity {
                 }
             });
         }
+
+        mNavigationView = (NavigationView) findViewById(R.id.nav_drawer);
+        mNavigationView.getMenu().getItem(0).setChecked(true);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home:
+
+                        return true;
+                    case R.id.action_setup:
+                        Intent i = new Intent(mContext, Setup.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        startActivity(i);
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
     }
 
     @Override

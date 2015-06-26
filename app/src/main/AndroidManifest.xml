@@ -34,7 +34,12 @@
         </activity>
         <activity
             android:name=".Setup"
-            android:label="@string/title_activity_setup" >
+            android:label="@string/title_activity_setup"
+            android:parentActivityName=".Setup">
+        </activity>
+        <activity
+            android:name=".EditCategoryActivity"
+            android:label="@string/title_activity_edit_category" >
         </activity>
     </application>
 
