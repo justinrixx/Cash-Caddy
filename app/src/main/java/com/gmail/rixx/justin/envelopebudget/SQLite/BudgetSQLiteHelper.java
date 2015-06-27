@@ -112,7 +112,7 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
 
         // build the query
         Cursor cursor = db.query(CATEGORY_TABLE_NAME, CATEGORY_COLUMNS,
-                " id = ?", new String[] { String.valueOf(id) }, null, null, null, null);
+                " id = ?", new String[]{String.valueOf(id)}, null, null, null, null);
 
         Category category = null;
         // only get the first one
@@ -322,11 +322,70 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      * category "foo", but only those which were added after the date given.
      * @param category The name of the category
      * @param minDate The minimum date of the results. This is an integer representing a UNIX <p/>
-     *                time stamp.
+     *                timestamp.
      * @return A list containing the results
      */
     public List<Transaction> getTransactions(String category, int minDate) {
         return null; // TODO
+    }
+
+    /**
+     * Get the cost for all transactions in a given category that occurred after a given date
+     * @param category The category to query
+     * @param minDate The date to start looking at, formatted as a UNIX timestamp
+     * @return The total cost for a category
+     */
+    public double getTotalCost(String category, int minDate) {
+        double result = 0.0;
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        // build the query string
+        Cursor cursor = db.query(TRANSACTION_TABLE_NAME,
+                new String[] { TRANSACTION_KEY_AMOUNT }, // only get the amount column
+                TRANSACTION_KEY_CATEGORY + " = ? AND " + TRANSACTION_KEY_DATE + " <= ? ",
+                new String[] { category, String.valueOf(minDate) },
+                null, null, null, null);
+
+        // add up all the costs
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    result += cursor.getDouble(0);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get the total cost for a category, in the entire database
+     * @param category The category to query for
+     * @return The total cost of all the transactions in dollars
+     */
+    public double getTotalCost(String category) {
+        double result = 0.0;
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        // build the query string
+        Cursor cursor = db.query(TRANSACTION_TABLE_NAME,
+                new String[] { TRANSACTION_KEY_AMOUNT }, // only get the amount column
+                TRANSACTION_KEY_CATEGORY + " = ? ",
+                new String[] { category },
+                null, null, null, null);
+
+        // add up all the costs
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    result += cursor.getDouble(0);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return result;
     }
 
     /**
