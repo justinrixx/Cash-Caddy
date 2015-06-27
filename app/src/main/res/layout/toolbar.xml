@@ -6,6 +6,8 @@
     android:background="@color/primary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:elevation="4dp"
+    app:elevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 </android.support.v7.widget.Toolbar>
