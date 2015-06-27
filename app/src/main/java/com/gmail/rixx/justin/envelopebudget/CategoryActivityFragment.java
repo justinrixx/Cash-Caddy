@@ -50,10 +50,10 @@ public class CategoryActivityFragment extends Fragment {
     }
 
     private void populateData() {
-        data.add(new Transaction(1l, "Gas", "12-18-1992", 57.43, "Gas in Laramie" ));
-        data.add(new Transaction(2l, "Gas", "08-11-2014", 47.13, "Gas in Laramie" ));
-        data.add(new Transaction(3l, "Gas", "08-14-2014", 27.43, "Gas in Laramie" ));
-        data.add(new Transaction(4l, "Gas", "08-17-2014", 28.47, "Gas in Laramie" ));
-        data.add(new Transaction(5l, "Gas", "08-14-2014", 23.65, "Gas in Laramie" ));
+        data.add(new Transaction(1, "Gas", "12-18-1992", 57.43, "Gas in Laramie" ));
+        data.add(new Transaction(2, "Gas", "08-11-2014", 47.13, "Gas in Laramie" ));
+        data.add(new Transaction(3, "Gas", "08-14-2014", 27.43, "Gas in Laramie" ));
+        data.add(new Transaction(4, "Gas", "08-17-2014", 28.47, "Gas in Laramie" ));
+        data.add(new Transaction(5, "Gas", "08-14-2014", 23.65, "Gas in Laramie" ));
     }
 }

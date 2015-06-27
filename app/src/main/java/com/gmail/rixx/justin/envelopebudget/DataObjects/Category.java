@@ -10,24 +10,15 @@ public class Category {
     }
 
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String category;
     private double amount;
-    private String dateLastRefresh;
+    private String dateNextRefresh;
     private RefreshCode refreshCode;
 
-    public Category(String category, double amount, String dateLastRefresh, RefreshCode refreshCode) {
+    public Category(String category, double amount, String dateNextRefresh, RefreshCode refreshCode) {
         this.category = category;
         this.amount = amount;
-        this.dateLastRefresh = dateLastRefresh;
+        this.dateNextRefresh = dateNextRefresh;
         this.refreshCode = refreshCode;
     }
 
@@ -53,12 +44,12 @@ public class Category {
         this.amount = amount;
     }
 
-    public String getDateLastRefresh() {
-        return dateLastRefresh;
+    public String getDateNextRefresh() {
+        return dateNextRefresh;
     }
 
-    public void setDateLastRefresh(String dateLastRefresh) {
-        this.dateLastRefresh = dateLastRefresh;
+    public void setDateNextRefresh(String dateNextRefresh) {
+        this.dateNextRefresh = dateNextRefresh;
     }
 
     public RefreshCode getRefreshCode() {
@@ -67,5 +58,13 @@ public class Category {
 
     public void setRefreshCode(RefreshCode refreshCode) {
         this.refreshCode = refreshCode;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
