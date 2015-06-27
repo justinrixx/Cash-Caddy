@@ -10,7 +10,10 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by justin on 6/19/15.
@@ -32,8 +35,14 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // set the category name
-        holder.dateTextView.setText(data.get(position).getDate());
+
+        // transform the date to something human readable
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.MILLISECOND, data.get(position).getDate() * 1000);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+        String formattedDate = dateFormat.format(c.getTime());
+
+        holder.dateTextView.setText(formattedDate);
 
         // format the number
         double d = data.get(position).getCost();

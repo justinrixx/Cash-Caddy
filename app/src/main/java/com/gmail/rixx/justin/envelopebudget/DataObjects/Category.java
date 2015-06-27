@@ -12,13 +12,17 @@ public class Category {
     private int id;
     private String category;
     private double amount;
-    private String dateNextRefresh;
+    private int dateNextRefresh;
+    private int dateLastRefresh;
+
     private RefreshCode refreshCode;
 
-    public Category(String category, double amount, String dateNextRefresh, RefreshCode refreshCode) {
+    public Category(int id, String category, double amount, int dateNextRefresh, int dateLastRefresh, RefreshCode refreshCode) {
+        this.id = id;
         this.category = category;
         this.amount = amount;
         this.dateNextRefresh = dateNextRefresh;
+        this.dateLastRefresh = dateLastRefresh;
         this.refreshCode = refreshCode;
     }
 
@@ -44,12 +48,20 @@ public class Category {
         this.amount = amount;
     }
 
-    public String getDateNextRefresh() {
+    public int getDateNextRefresh() {
         return dateNextRefresh;
     }
 
-    public void setDateNextRefresh(String dateNextRefresh) {
+    public void setDateNextRefresh(int dateNextRefresh) {
         this.dateNextRefresh = dateNextRefresh;
+    }
+
+    public int getDateLastRefresh() {
+        return dateLastRefresh;
+    }
+
+    public void setDateLastRefresh(int dateLastRefresh) {
+        this.dateLastRefresh = dateLastRefresh;
     }
 
     public RefreshCode getRefreshCode() {

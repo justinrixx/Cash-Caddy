@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class NewTransactionActivity extends AppCompatActivity {
 
@@ -46,8 +44,6 @@ public class NewTransactionActivity extends AppCompatActivity {
 
                 // get the save the date with the data
                 Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
-                String formattedDate = df.format(c.getTime());
 
                 // get the data
                 String category = ((TextView) findViewById(R.id.dropdown)).getText().toString();
@@ -56,12 +52,13 @@ public class NewTransactionActivity extends AppCompatActivity {
 
                 Snackbar.make(v, "Got the data!", Snackbar.LENGTH_LONG).show();
 
-                Log.i("Data", "Date: " + formattedDate);
+                Log.i("Data", "Date: " + (c.getTimeInMillis() / 1000));
                 Log.i("Data", "Category: " + category);
                 Log.i("Data", "Amount: " + String.valueOf(amount));
                 Log.i("Data", "Comment: " + comment);
 
-                Transaction transaction = new Transaction(0, category, formattedDate, amount, comment);
+                Transaction transaction = new Transaction(0, category,
+                        (int)(c.getTimeInMillis() / 1000), amount, comment);
             }
         });
     }

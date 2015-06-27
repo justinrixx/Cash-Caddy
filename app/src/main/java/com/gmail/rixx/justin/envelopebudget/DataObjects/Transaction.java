@@ -8,11 +8,11 @@ public class Transaction {
 
     private int id;
     private String category;
-    private String date;
+    private int date;
     private double cost;
     private String comment;
 
-    public Transaction(int id, String category, String date, double cost, String comment) {
+    public Transaction(int id, String category, int date, double cost, String comment) {
         this.id = id;
         this.category = category;
         this.date = date;
@@ -36,11 +36,11 @@ public class Transaction {
         this.category = category;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 

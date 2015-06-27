@@ -13,6 +13,7 @@ import com.gmail.rixx.justin.envelopebudget.Adapter.SetupRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -57,9 +58,9 @@ public class SetupFragment extends Fragment {
     }
 
     private void populateCategories() {
-        categories.add(new Category("Gas", 120.00, "06-01-2015", Category.RefreshCode.BIWEEKLY));
-        categories.add(new Category("Groceries", 230.00, "06-01-2015", Category.RefreshCode.MONTHLY));
-        categories.add(new Category("Eating Out", 50.00, "06-01-2015", Category.RefreshCode.BIWEEKLY));
-        categories.add(new Category("Entertainment", 30.00, "06-01-2015", Category.RefreshCode.BIWEEKLY));
+
+        Calendar c = Calendar.getInstance();
+
+        categories.add(new Category(0, "Gas", 120.0, (int)(c.getTimeInMillis() / 1000), (int)(c.getTimeInMillis() / 1000), Category.RefreshCode.MONTHLY));
     }
 }

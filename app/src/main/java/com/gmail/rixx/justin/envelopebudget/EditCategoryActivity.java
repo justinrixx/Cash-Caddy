@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +15,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class EditCategoryActivity extends AppCompatActivity {
@@ -43,7 +49,16 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                 String name = ((EditText) findViewById(R.id.name_edittext)).getText().toString();
                 String amountString = ((EditText) findViewById(R.id.amount_edittext)).getText().toString();
-                String date = ((TextView) findViewById(R.id.date_textview)).getText().toString();
+                String dateString = ((TextView) findViewById(R.id.date_textview)).getText().toString();
+
+                // format the date into a unix timestamp
+                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+                Calendar cal  = Calendar.getInstance();
+                try {
+                    cal.setTime(df.parse(dateString));
+                } catch (ParseException e) {
+                    Log.e("EditCategoryActivity", "Error parsing date string " + dateString + " to calendar object.", e);
+                }
 
                 // not sure what the choice was
                 Category.RefreshCode refreshCode;
@@ -54,7 +69,6 @@ public class EditCategoryActivity extends AppCompatActivity {
                 } else {
                     refreshCode = Category.RefreshCode.BIWEEKLY;
                 }
-
 
                 TextInputLayout nameLayout = (TextInputLayout) findViewById(R.id.input_layout_name);
                 TextInputLayout amountLayout = (TextInputLayout) findViewById(R.id.input_layout_dollar);
@@ -80,7 +94,19 @@ public class EditCategoryActivity extends AppCompatActivity {
                 // get the double out
                 double amount = Double.valueOf(amountString);
 
-                Category c = new Category(name, amount, date, refreshCode);
+                // get the dates
+                int nextRefresh = (int)(cal.getTimeInMillis() / 1000);
+
+                // figure out when the last refresh should be
+                if (refreshCode == Category.RefreshCode.MONTHLY) {
+                    cal.add(Calendar.MONTH, -1);
+                } else {
+                    cal.add(Calendar.DATE, -14);
+                }
+
+                int lastRefresh = (int)(cal.getTimeInMillis() / 1000);
+
+                Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
 
                 Snackbar.make(mToolbar, "Got the data", Snackbar.LENGTH_LONG).show();
             }
