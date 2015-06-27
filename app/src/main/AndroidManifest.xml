@@ -40,6 +40,9 @@
         <activity
             android:name=".EditCategoryActivity"
             android:label="@string/title_activity_edit_category" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gmail.rixx.justin.envelopebudget.Setup" />
         </activity>
     </application>
 

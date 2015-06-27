@@ -11,13 +11,9 @@
     tools:context="com.gmail.rixx.justin.envelopebudget.EditCategoryActivityFragment">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_comments"
+        android:id="@+id/input_layout_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/name_edittext"
@@ -30,10 +26,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="horizontal">
 
         <TextView
@@ -81,6 +73,7 @@
             android:id="@+id/month_radiobutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="Monthly"/>
     </RadioGroup>
 
@@ -89,5 +82,26 @@
         android:layout_width="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:text="Starting:"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="@color/divider" />
+
+    <TextView
+        android:id="@+id/date_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:text="12-18-1992" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="@color/divider" />
 
 </LinearLayout>
