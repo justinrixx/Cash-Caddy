@@ -6,13 +6,13 @@ package com.gmail.rixx.justin.envelopebudget.DataObjects;
  */
 public class Transaction {
 
-    private long id;
+    private int id;
     private String category;
     private String date;
     private double cost;
     private String comment;
 
-    public Transaction(long id, String category, String date, double cost, String comment) {
+    public Transaction(int id, String category, String date, double cost, String comment) {
         this.id = id;
         this.category = category;
         this.date = date;
@@ -20,11 +20,11 @@ public class Transaction {
         this.comment = comment;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
