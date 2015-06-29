@@ -1,5 +1,7 @@
 package com.gmail.rixx.justin.envelopebudget.DataObjects;
 
+import java.util.Calendar;
+
 /**
  * Created by justin on 6/20/15.
  */
@@ -78,5 +80,25 @@ public class Category {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Update the new refresh dates
+     */
+    public void refresh() {
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(dateNextRefresh * 1000);
+
+        // refresh in a month
+        if (refreshCode == RefreshCode.MONTHLY) {
+            c.add(Calendar.MONTH, 1);
+        } else { // refresh in two weeks
+            c.add(Calendar.DAY_OF_MONTH, 14);
+        }
+
+        dateLastRefresh = dateNextRefresh;
+
+        dateNextRefresh = (int)(c.getTimeInMillis() / 1000);
     }
 }

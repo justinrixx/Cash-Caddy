@@ -11,6 +11,7 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -169,6 +170,47 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
         }
 
         return data;
+    }
+
+    /**
+     *
+     */
+    public void updateCategories() {
+
+        List<Category> data = new ArrayList<>();
+
+        // build the query
+        String query = "SELECT * FROM " + CATEGORY_TABLE_NAME;
+
+        // execute the query
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // build a category object
+                Category category = new Category(
+                        cursor.getInt(0),                     // id
+                        cursor.getString(1),                  // name
+                        cursor.getDouble(2),                  // amount
+                        cursor.getInt(3),                     // nextrefresh
+                        cursor.getInt(4),                     // lastrefresh
+                        getRefreshcode(cursor.getString(5))); // refreshcode
+
+                data.add(category);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        // loop through and update the categories
+        for (Category c : data) {
+            Calendar calendar = Calendar.getInstance();
+            if (c.getDateNextRefresh() <= (int)(calendar.getTimeInMillis() / 1000)) {
+                c.refresh();
+                updateCategory(c);
+            }
+        }
     }
 
     /**

@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  */
 public class HomeFragment extends Fragment {
 
-    private ArrayList<Category> categories;
+    private List<Category> categories;
     private RecyclerView mRecyclerView;
     private HomeRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -58,7 +61,18 @@ public class HomeFragment extends Fragment {
      * Populate the list of categories to prepare to display them in the RecyclerView
      */
     private void populateCategories() {
-        categories = generateFakeData();
+
+        // get all the categories from the database
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+        categories = helper.getCategories();
+
+        // make sure the categories are up to date
+        helper.updateCategories();
+
+        // update the current costs
+        for (Category c : categories) {
+            c.setAmount(c.getAmount() - helper.getTotalCost(c.getCategory(), c.getDateLastRefresh()));
+        }
     }
 
     private ArrayList<Category> generateFakeData() {

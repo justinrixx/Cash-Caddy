@@ -14,13 +14,14 @@ import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Category> data;
+    private List<Category> data;
 
-    public HomeRecyclerViewAdapter(ArrayList<Category> data) {
+    public HomeRecyclerViewAdapter(List<Category> data) {
         this.data = data;
     }
 
