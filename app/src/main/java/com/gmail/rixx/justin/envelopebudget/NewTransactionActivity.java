@@ -1,5 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.util.Calendar;
 
 public class NewTransactionActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +55,15 @@ public class NewTransactionActivity extends AppCompatActivity {
 
                 Snackbar.make(v, "Got the data!", Snackbar.LENGTH_LONG).show();
 
-                Log.i("Data", "Date: " + (c.getTimeInMillis() / 1000));
-                Log.i("Data", "Category: " + category);
-                Log.i("Data", "Amount: " + String.valueOf(amount));
-                Log.i("Data", "Comment: " + comment);
-
                 Transaction transaction = new Transaction(0, category,
                         (int)(c.getTimeInMillis() / 1000), amount, comment);
+
+                // write it to the database
+                BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);
+                helper.addTransaction(transaction);
+
+                // get out
+                finish();
             }
         });
     }
