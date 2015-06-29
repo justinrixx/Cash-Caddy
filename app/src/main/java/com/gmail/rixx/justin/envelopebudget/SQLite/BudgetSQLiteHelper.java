@@ -326,7 +326,28 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      * @return A list containing the results
      */
     public List<Transaction> getTransactions(String category, int minDate) {
-        return null; // TODO
+
+        List<Transaction> list = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        // build the query string
+        Cursor cursor = db.query(TRANSACTION_TABLE_NAME, TRANSACTION_COLUMNS,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+
+                do {
+                    list.add(new Transaction(cursor.getInt(0), cursor.getString(1),
+                            cursor.getInt(2), cursor.getDouble(3), cursor.getString(4)));
+                } while (cursor.moveToNext());
+
+                cursor.close();
+            }
+        }
+
+        return list;
     }
 
     /**
@@ -354,6 +375,8 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
                     result += cursor.getDouble(0);
                 } while (cursor.moveToNext());
             }
+
+            cursor.close();
         }
 
         return result;
@@ -383,6 +406,7 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
                     result += cursor.getDouble(0);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
         }
 
         return result;
