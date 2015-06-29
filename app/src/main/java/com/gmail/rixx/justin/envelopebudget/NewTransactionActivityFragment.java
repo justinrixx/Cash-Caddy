@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -65,10 +69,20 @@ public class NewTransactionActivityFragment extends Fragment {
     }
 
     private void populateData() {
+
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+        List<Category> list = helper.getCategories();
+
+        for (Category c : list) {
+            categories.add(c.getCategory());
+        }
+
+        /*
         categories.add("Groceries");
         categories.add("Gas");
         categories.add("Entertainment");
         categories.add("Haircuts");
         categories.add("Pets");
+        */
     }
 }
