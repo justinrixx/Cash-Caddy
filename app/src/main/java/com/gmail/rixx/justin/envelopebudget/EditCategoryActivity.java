@@ -1,5 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,6 +27,7 @@ import java.util.Calendar;
 public class EditCategoryActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +111,10 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                 Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
 
-                Snackbar.make(mToolbar, "Got the data", Snackbar.LENGTH_LONG).show();
+                BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
+                helper.addCategory(c);
+
+                finish();
             }
         });
     }
