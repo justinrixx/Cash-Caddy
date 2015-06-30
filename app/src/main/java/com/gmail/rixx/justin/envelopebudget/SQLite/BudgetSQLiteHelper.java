@@ -78,6 +78,20 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    /**
+     * Dump the database
+     */
+    public void dumpDb() {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        // drop old tables if they exist
+        db.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TRANSACTION_TABLE_NAME);
+
+        this.onCreate(db);
+    }
+
     /*****************************************************************************
      * CATEGORY DATABASE OPERATIONS
      *****************************************************************************/
@@ -172,8 +186,37 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public List<Category> getCategoriesForDisplay() {
+
+        List<Category> data = new ArrayList<>();
+
+        // execute the query
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(CATEGORY_TABLE_NAME, CATEGORY_COLUMNS,
+                CATEGORY_KEY_LASTREFRESH + " != ?", new String[] {String.valueOf(0)}, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // build a category object
+                Category category = new Category(
+                        cursor.getInt(0),                     // id
+                        cursor.getString(1),                  // name
+                        cursor.getDouble(2),                  // amount
+                        cursor.getInt(3),                     // nextrefresh
+                        cursor.getInt(4),                     // lastrefresh
+                        getRefreshcode(cursor.getString(5))); // refreshcode
+
+                data.add(category);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return data;
+    }
+
     /**
-     *
+     * Refresh the categories that need refreshin'
      */
     public void updateCategories() {
 

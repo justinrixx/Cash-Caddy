@@ -76,12 +76,13 @@ public class Home extends AppCompatActivity {
     }
 
     private void populateCategories() {
-        // get all the categories from the database
+
         BudgetSQLiteHelper helper = new BudgetSQLiteHelper(this);
-        categories = helper.getCategories();
 
         // make sure the categories are up to date
         helper.updateCategories();
+
+        categories = helper.getCategoriesForDisplay();
 
         // update the current costs
         for (Category c : categories) {
@@ -125,6 +126,14 @@ public class Home extends AppCompatActivity {
 
                         startActivity(i);
                         return true;
+
+                    // TODO remove this
+                    case R.id.action_log:
+
+                        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);
+                        helper.dumpDb();
+                        return true;
+
                     default:
                         return true;
                 }

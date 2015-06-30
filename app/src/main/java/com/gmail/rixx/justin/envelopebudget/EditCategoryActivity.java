@@ -107,7 +107,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                     cal.add(Calendar.DATE, -14);
                 }
 
-                long lastRefresh = (cal.getTimeInMillis() / 1000);
+                long lastRefresh = 0;
 
                 Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
 
