@@ -406,12 +406,13 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
         // build the query string
         Cursor cursor = db.query(TRANSACTION_TABLE_NAME,
                 new String[] { TRANSACTION_KEY_AMOUNT }, // only get the amount column
-                TRANSACTION_KEY_CATEGORY + " = ? AND " + TRANSACTION_KEY_DATE + " <= ? ",
+                TRANSACTION_KEY_CATEGORY + " = ? and " + TRANSACTION_KEY_DATE + " >= ? ",
                 new String[] { category, String.valueOf(minDate) },
                 null, null, null, null);
 
         // add up all the costs
         if (cursor != null) {
+
             if (cursor.moveToFirst()) {
                 do {
                     result += cursor.getDouble(0);
