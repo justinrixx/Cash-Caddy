@@ -74,19 +74,4 @@ public class HomeFragment extends Fragment {
             c.setAmount(c.getAmount() - helper.getTotalCost(c.getCategory(), c.getDateLastRefresh()));
         }
     }
-
-    private ArrayList<Category> generateFakeData() {
-        ArrayList <Category> list = new ArrayList<>();
-
-        list.add(new Category("Groceries", 76.56));
-        list.add(new Category("Gas", -19.43));
-        list.add(new Category("Entertainment", 17.57));
-        list.add(new Category("Haircuts", -505.5));
-        list.add(new Category("Emergency", 0.78));
-        list.add(new Category("Wardrobe", 98.40));
-        list.add(new Category("Harry Potter", -12.00));
-        list.add(new Category("Other Stuff", 23.54));
-
-        return list;
-    }
 }
