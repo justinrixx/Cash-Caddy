@@ -1,10 +1,12 @@
 package com.gmail.rixx.justin.envelopebudget.DataObjects;
 
+import java.io.Serializable;
+
 /**
  * Transaction class used throughout the app. Each transaction represents a row in the transactions
  * table in the database
  */
-public class Transaction {
+public class Transaction implements Serializable {
 
     private int id;
     private String category;

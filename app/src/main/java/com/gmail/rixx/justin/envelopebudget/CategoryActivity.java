@@ -7,16 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 
 
 public class CategoryActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+
+        // get the data out
+        category = (Category) getIntent().getSerializableExtra(getString(R.string.intent_extra_category));
 
         setUpToolbar();
     }
@@ -29,7 +36,7 @@ public class CategoryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             // set the title
-            getSupportActionBar().setTitle(getIntent().getStringExtra(getString(R.string.intent_extra_category_name)));
+            getSupportActionBar().setTitle(category.getCategory());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();

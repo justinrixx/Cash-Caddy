@@ -57,7 +57,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View itemView;
         public TextView categoryTextView;
         public TextView netTextView;
@@ -80,8 +80,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
             // launch the category activity
             Intent i = new Intent(itemView.getContext(), CategoryActivity.class);
-            i.putExtra(itemView.getContext().getString(R.string.intent_extra_category_name),
-                    categoryTextView.getText().toString());
+            i.putExtra(v.getContext().getString(R.string.intent_extra_category), data.get(getAdapterPosition()));
+
             itemView.getContext().startActivity(i);
         }
     }

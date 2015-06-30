@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -20,9 +21,9 @@ import java.util.Locale;
  */
 public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<TransactionRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Transaction> data;
+    private List<Transaction> data;
 
-    public TransactionRecyclerViewAdapter(ArrayList<Transaction> data) {
+    public TransactionRecyclerViewAdapter(List<Transaction> data) {
         this.data = data;
     }
 

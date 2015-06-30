@@ -1,11 +1,12 @@
 package com.gmail.rixx.justin.envelopebudget.DataObjects;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by justin on 6/20/15.
  */
-public class Category {
+public class Category implements Serializable {
 
     public enum RefreshCode {
         BIWEEKLY, MONTHLY
