@@ -15,12 +15,12 @@ public class Category implements Serializable {
     private int id;
     private String category;
     private double amount;
-    private int dateNextRefresh;
-    private int dateLastRefresh;
+    private long dateNextRefresh;
+    private long dateLastRefresh;
 
     private RefreshCode refreshCode;
 
-    public Category(int id, String category, double amount, int dateNextRefresh, int dateLastRefresh, RefreshCode refreshCode) {
+    public Category(int id, String category, double amount, long dateNextRefresh, long dateLastRefresh, RefreshCode refreshCode) {
         this.id = id;
         this.category = category;
         this.amount = amount;
@@ -51,19 +51,19 @@ public class Category implements Serializable {
         this.amount = amount;
     }
 
-    public int getDateNextRefresh() {
+    public long getDateNextRefresh() {
         return dateNextRefresh;
     }
 
-    public void setDateNextRefresh(int dateNextRefresh) {
+    public void setDateNextRefresh(long dateNextRefresh) {
         this.dateNextRefresh = dateNextRefresh;
     }
 
-    public int getDateLastRefresh() {
+    public long getDateLastRefresh() {
         return dateLastRefresh;
     }
 
-    public void setDateLastRefresh(int dateLastRefresh) {
+    public void setDateLastRefresh(long dateLastRefresh) {
         this.dateLastRefresh = dateLastRefresh;
     }
 
@@ -100,6 +100,6 @@ public class Category implements Serializable {
 
         dateLastRefresh = dateNextRefresh;
 
-        dateNextRefresh = (int)(c.getTimeInMillis() / 1000);
+        dateNextRefresh = (c.getTimeInMillis() / 1000);
     }
 }

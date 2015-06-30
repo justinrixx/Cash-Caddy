@@ -39,7 +39,7 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
 
         // transform the date to something human readable
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.MILLISECOND, data.get(position).getDate() * 1000);
+        c.setTimeInMillis(data.get(position).getDate() * 1000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         String formattedDate = dateFormat.format(c.getTime());
 

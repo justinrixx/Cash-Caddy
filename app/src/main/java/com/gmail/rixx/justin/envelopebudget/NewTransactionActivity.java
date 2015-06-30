@@ -45,18 +45,13 @@ public class NewTransactionActivity extends AppCompatActivity {
                     return;
                 }
 
-                // get the save the date with the data
-                Calendar c = Calendar.getInstance();
-
                 // get the data
                 String category = ((TextView) findViewById(R.id.dropdown)).getText().toString();
                 double amount = Double.valueOf(((EditText) findViewById(R.id.amount_edittext)).getText().toString());
                 String comment = ((EditText) findViewById(R.id.comments_edittext)).getText().toString();
 
-                Snackbar.make(v, "Got the data!", Snackbar.LENGTH_LONG).show();
-
                 Transaction transaction = new Transaction(0, category,
-                        (int)(c.getTimeInMillis() / 1000), amount, comment);
+                        Calendar.getInstance().getTimeInMillis() / 1000, amount, comment);
 
                 // write it to the database
                 BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);

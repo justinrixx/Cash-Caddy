@@ -98,7 +98,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 double amount = Double.valueOf(amountString);
 
                 // get the dates
-                int nextRefresh = (int)(cal.getTimeInMillis() / 1000);
+                long nextRefresh = (cal.getTimeInMillis() / 1000);
 
                 // figure out when the last refresh should be
                 if (refreshCode == Category.RefreshCode.MONTHLY) {
@@ -107,7 +107,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                     cal.add(Calendar.DATE, -14);
                 }
 
-                int lastRefresh = (int)(cal.getTimeInMillis() / 1000);
+                long lastRefresh = (cal.getTimeInMillis() / 1000);
 
                 Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
 

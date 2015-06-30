@@ -10,11 +10,11 @@ public class Transaction implements Serializable {
 
     private int id;
     private String category;
-    private int date;
+    private long date;
     private double cost;
     private String comment;
 
-    public Transaction(int id, String category, int date, double cost, String comment) {
+    public Transaction(int id, String category, long date, double cost, String comment) {
         this.id = id;
         this.category = category;
         this.date = date;
@@ -38,11 +38,11 @@ public class Transaction implements Serializable {
         this.category = category;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

@@ -367,7 +367,7 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      *                timestamp.
      * @return A list containing the results
      */
-    public List<Transaction> getTransactions(String category, int minDate) {
+    public List<Transaction> getTransactions(String category, long minDate) {
 
         List<Transaction> list = new ArrayList<>();
 
@@ -398,7 +398,7 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      * @param minDate The date to start looking at, formatted as a UNIX timestamp
      * @return The total cost for a category
      */
-    public double getTotalCost(String category, int minDate) {
+    public double getTotalCost(String category, long minDate) {
         double result = 0.0;
 
         SQLiteDatabase db = getReadableDatabase();
