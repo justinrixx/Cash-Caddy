@@ -11,15 +11,16 @@ import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by justin on 6/20/15.
  */
 public class SetupRecyclerViewAdapter extends RecyclerView.Adapter<SetupRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Category> data;
+    private List<Category> data;
 
-    public SetupRecyclerViewAdapter(ArrayList <Category> data) {
+    public SetupRecyclerViewAdapter(List<Category> data) {
         this.data = data;
     }
 

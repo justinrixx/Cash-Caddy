@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.Adapter.SetupRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -21,7 +23,7 @@ import java.util.Calendar;
  */
 public class SetupFragment extends Fragment {
 
-    private ArrayList<Category> categories;
+    private List<Category> categories;
     private RecyclerView mRecyclerView;
     private SetupRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -34,7 +36,6 @@ public class SetupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_setup, container, false);
 
-        categories = new ArrayList<>();
         populateCategories();
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.category_recyclerview);
@@ -59,8 +60,11 @@ public class SetupFragment extends Fragment {
 
     private void populateCategories() {
 
-        Calendar c = Calendar.getInstance();
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+        categories = helper.getCategories();
 
-        categories.add(new Category(0, "Gas", 120.0, (int)(c.getTimeInMillis() / 1000), (int)(c.getTimeInMillis() / 1000), Category.RefreshCode.MONTHLY));
+        //categories = new ArrayList<>();
+        //Calendar c = Calendar.getInstance();
+        //categories.add(new Category(0, "Gas", 120.0, (int)(c.getTimeInMillis() / 1000), (int)(c.getTimeInMillis() / 1000), Category.RefreshCode.MONTHLY));
     }
 }
