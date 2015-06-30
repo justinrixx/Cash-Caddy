@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,15 +50,15 @@ public class CategoryActivityFragment extends Fragment {
 
         // set the remaining amount at the bottom
         TextView remaining = (TextView) rootView.findViewById(R.id.net_amount_textview);
-        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
-        double net = category.getAmount() - helper.getTotalCost(category.getCategory(), category.getDateLastRefresh());
+        double net = category.getAmount();
+        DecimalFormat df = new DecimalFormat("#0.00");
 
         if (net >= 0.0) {
             remaining.setTextColor(getResources().getColor(R.color.green));
-            remaining.setText("+$" + String.valueOf(net));
+            remaining.setText("+$" + String.valueOf(df.format(net)));
         } else {
             remaining.setTextColor(getResources().getColor(R.color.red));
-            remaining.setText("-$" + String.valueOf(Math.abs(net)));
+            remaining.setText("-$" + String.valueOf(df.format(Math.abs(net))));
         }
 
         return rootView;
