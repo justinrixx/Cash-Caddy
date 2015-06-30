@@ -7,9 +7,19 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Home extends AppCompatActivity {
@@ -18,6 +28,10 @@ public class Home extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context mContext = this;
     private NavigationView mNavigationView;
+    private RecyclerView mRecyclerView;
+    private HomeRecyclerViewAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private List<Category> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +47,46 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(mContext, NewTransactionActivity.class));
             }
         });
+
+        // empty until we get the real stuff from the database
+        categories = new ArrayList<>();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
+        setUpRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        populateCategories();
+        mAdapter = new HomeRecyclerViewAdapter(categories);
+        mRecyclerView.swapAdapter(mAdapter, false);
+    }
+
+    private void setUpRecyclerView() {
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // create the adapter
+        mAdapter = new HomeRecyclerViewAdapter(categories);
+
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void populateCategories() {
+        // get all the categories from the database
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(this);
+        categories = helper.getCategories();
+
+        // make sure the categories are up to date
+        helper.updateCategories();
+
+        // update the current costs
+        for (Category c : categories) {
+            c.setAmount(c.getAmount() - helper.getTotalCost(c.getCategory(), c.getDateLastRefresh()));
+        }
     }
 
     private void setUpToolbar() {
