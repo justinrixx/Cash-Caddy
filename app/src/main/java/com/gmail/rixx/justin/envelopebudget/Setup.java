@@ -7,9 +7,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.gmail.rixx.justin.envelopebudget.Adapter.SetupRecyclerViewAdapter;
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Setup extends AppCompatActivity {
@@ -18,6 +27,10 @@ public class Setup extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context mContext = this;
     private NavigationView mNavigationView;
+    private List<Category> categories;
+    private RecyclerView mRecyclerView;
+    private SetupRecyclerViewAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +41,26 @@ public class Setup extends AppCompatActivity {
         setUpToolbar();
         setUpNavDrawer();
 
+        categories = new ArrayList<>();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
+        setUpRecyclerView();
+
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, EditCategoryActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        populateCategories();
+        mAdapter = new SetupRecyclerViewAdapter(categories);
+        mRecyclerView.swapAdapter(mAdapter, false);
     }
 
     private void setUpToolbar() {
@@ -80,5 +107,25 @@ public class Setup extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Get the recyclerview taken care of
+     */
+    private void setUpRecyclerView() {
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // create the adapter
+        mAdapter = new SetupRecyclerViewAdapter(categories);
+
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void populateCategories() {
+
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(this);
+        categories = helper.getCategories();
     }
 }
