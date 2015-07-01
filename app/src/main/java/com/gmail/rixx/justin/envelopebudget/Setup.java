@@ -60,7 +60,7 @@ public class Setup extends AppCompatActivity {
 
         populateCategories();
         mAdapter = new SetupRecyclerViewAdapter(categories);
-        mRecyclerView.swapAdapter(mAdapter, false);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setUpToolbar() {

@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity {
 
         populateCategories();
         mAdapter = new HomeRecyclerViewAdapter(categories);
-        mRecyclerView.swapAdapter(mAdapter, false);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setUpRecyclerView() {
@@ -126,11 +126,8 @@ public class Home extends AppCompatActivity {
                         startActivity(i);
                         return true;
 
-                    // TODO remove this
                     case R.id.action_log:
 
-                        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);
-                        helper.dumpDb();
                         return true;
 
                     default:
