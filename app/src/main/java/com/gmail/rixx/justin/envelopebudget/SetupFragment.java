@@ -63,8 +63,5 @@ public class SetupFragment extends Fragment {
         BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
         categories = helper.getCategories();
 
-        //categories = new ArrayList<>();
-        //Calendar c = Calendar.getInstance();
-        //categories.add(new Category(0, "Gas", 120.0, (int)(c.getTimeInMillis() / 1000), (int)(c.getTimeInMillis() / 1000), Category.RefreshCode.MONTHLY));
     }
 }

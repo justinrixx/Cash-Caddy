@@ -16,7 +16,6 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,6 +50,8 @@ public class CategoryActivityFragment extends Fragment {
         // set the remaining amount at the bottom
         TextView remaining = (TextView) rootView.findViewById(R.id.net_amount_textview);
         double net = category.getAmount();
+
+        Log.d("CategoryFragment", "Net: " + String.valueOf(net));
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (net >= 0.0) {
@@ -75,12 +76,5 @@ public class CategoryActivityFragment extends Fragment {
 
         BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
         data = helper.getTransactions(category.getCategory(), category.getDateLastRefresh());
-
-        /*
-        data = new ArrayList<>();
-        data.add(new Transaction(1, "Gas", 1435415823, 12.37, "oops"));
-        data.add(new Transaction(1, "Gas", 1435415813, 12.37, "comment"));
-        data.add(new Transaction(1, "Gas", 1435411223, 14.16, "comment here"));
-        */
     }
 }

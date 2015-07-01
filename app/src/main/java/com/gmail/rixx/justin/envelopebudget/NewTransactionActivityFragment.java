@@ -71,18 +71,10 @@ public class NewTransactionActivityFragment extends Fragment {
     private void populateData() {
 
         BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
-        List<Category> list = helper.getCategories();
+        List<Category> list = helper.getCategoriesForDisplay();
 
-        for (Category c : list) {
-            categories.add(c.getCategory());
+        for (int i = 0; i < list.size(); ++i) {
+            categories.add(list.get(i).getCategory());
         }
-
-        /*
-        categories.add("Groceries");
-        categories.add("Gas");
-        categories.add("Entertainment");
-        categories.add("Haircuts");
-        categories.add("Pets");
-        */
     }
 }

@@ -13,7 +13,6 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,6 +40,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         double d = data.get(position).getAmount();
         DecimalFormat df = new DecimalFormat("#0.00");
 
+        Log.d("HomeAdapter", "Net: " + String.valueOf(data.get(position).getAmount()));
+
         if (d < 0.0) {
             // set the color to red
             holder.netTextView.setTextColor(holder.itemView.getResources().getColor(R.color.red));
@@ -65,8 +66,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         public ViewHolder(View itemView) {
             super(itemView);
 
-            Log.i("HomeRecyclerViewAdapter", "In ViewHolder constructor");
-
             this.itemView = itemView;
             itemView.setOnClickListener(this);
             categoryTextView = (TextView) itemView.findViewById(R.id.category_name_textview);
@@ -82,6 +81,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             Intent i = new Intent(itemView.getContext(), CategoryActivity.class);
             i.putExtra(v.getContext().getString(R.string.intent_extra_category), data.get(getAdapterPosition()));
 
+            Log.d("HomeAdapter", "Net: " + String.valueOf(data.get(getAdapterPosition()).getAmount()));
             itemView.getContext().startActivity(i);
         }
     }
