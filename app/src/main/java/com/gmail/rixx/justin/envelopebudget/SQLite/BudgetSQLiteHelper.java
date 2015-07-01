@@ -319,13 +319,14 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      * @return A refresh code corresponding to the string given
      */
     private Category.RefreshCode getRefreshcode(String refreshString) {
-        if (refreshString.equals("biweekly")) {
-            return Category.RefreshCode.BIWEEKLY;
-        } else if (refreshString.equals("monthly")) {
-            return Category.RefreshCode.MONTHLY;
-        } else {
-            Log.wtf("SQLite Helper", "Unknown refresh string!");
-            return Category.RefreshCode.MONTHLY;
+        switch (refreshString) {
+            case "biweekly":
+                return Category.RefreshCode.BIWEEKLY;
+            case "monthly":
+                return Category.RefreshCode.MONTHLY;
+            default:
+                Log.wtf("SQLite Helper", "Unknown refresh string!");
+                return Category.RefreshCode.MONTHLY;
         }
     }
 
