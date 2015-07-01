@@ -2,6 +2,7 @@ package com.gmail.rixx.justin.envelopebudget;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +27,8 @@ import java.util.Locale;
 public class EditCategoryActivityFragment extends Fragment {
 
     private TextView date;
+    private Category mCategory = null;
+    private View root;
 
     public EditCategoryActivityFragment() {
     }
@@ -29,22 +36,48 @@ public class EditCategoryActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_edit_category, container, false);
+        root = inflater.inflate(R.layout.fragment_edit_category, container, false);
 
-        date = (TextView) v.findViewById(R.id.date_textview);
+        // set the category if we got it
+        if (getActivity().getIntent().hasExtra(getResources().getString(R.string.intent_extra_category))) {
+            mCategory = (Category) getActivity().getIntent().getSerializableExtra(getResources().getString(R.string.intent_extra_category));
+        }
+
+        date = (TextView) root.findViewById(R.id.date_textview);
         setOnClickListeners();
 
-        return v;
+        return root;
     }
 
     private void setOnClickListeners() {
 
-        // set the textview to today
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
-        String formattedDate = df.format(c.getTime());
 
-        date.setText(formattedDate);
+        // set the textview to today
+        if (mCategory == null) {
+            String formattedDate = df.format(c.getTime());
+            date.setText(formattedDate);
+        } else {
+            // or whenever the category object says to
+            c.setTimeInMillis(mCategory.getDateNextRefresh() * 1000);
+
+            String formattedDate = df.format(c.getTime());
+            date.setText(formattedDate);
+
+            // set the category name
+            EditText name = (EditText) root.findViewById(R.id.name_edittext);
+            name.setText(mCategory.getCategory());
+
+            // set the amount
+            EditText amount = (EditText) root.findViewById(R.id.amount_edittext);
+            amount.setText(String.valueOf(mCategory.getAmount()));
+
+            // set the radio button
+            if (mCategory.getRefreshCode() == Category.RefreshCode.BIWEEKLY) {
+                ((RadioButton) root.findViewById(R.id.two_week_radiobutton)).setChecked(true);
+            }
+        }
 
         // set an onclick listener
         date.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +92,7 @@ public class EditCategoryActivityFragment extends Fragment {
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
-        @Override
+        @Override @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();

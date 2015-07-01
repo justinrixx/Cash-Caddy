@@ -3,11 +3,12 @@ package com.gmail.rixx.justin.envelopebudget;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,6 +41,41 @@ public class EditCategoryActivity extends AppCompatActivity {
         }
 
         setOnClickListeners();
+    }
+
+    /**
+     * Add the delete ONLY IF a category was passed in
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (getIntent().hasExtra(getString(R.string.intent_extra_category))) {
+            getMenuInflater().inflate(R.menu.menu_edit_category, menu);
+            return true;
+        } else {
+            return super.onCreateOptionsMenu(menu);
+        }
+    }
+
+    /**
+     * Should never EVER be called if no category was passed in through the intent
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            new BudgetSQLiteHelper(this).deleteCategory((Category) getIntent()
+                    .getSerializableExtra(getString(R.string.intent_extra_category)));
+
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -109,10 +145,21 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                 long lastRefresh = 0;
 
-                Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
-
                 BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
-                helper.addCategory(c);
+
+                if (getIntent().hasExtra(getString(R.string.intent_extra_category))) {
+                    Category c = (Category) getIntent().getSerializableExtra(getString(R.string.intent_extra_category));
+                    c.setCategory(name);
+                    c.setAmount(amount);
+                    c.setDateNextRefresh(nextRefresh);
+                    c.setDateLastRefresh(lastRefresh);
+                    c.setRefreshCode(refreshCode);
+
+                    helper.updateCategory(c);
+                } else {
+                    Category c = new Category(0, name, amount, nextRefresh, lastRefresh, refreshCode);
+                    helper.addCategory(c);
+                }
 
                 finish();
             }

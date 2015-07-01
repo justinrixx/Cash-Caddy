@@ -293,6 +293,10 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
 
+        // delete all the transactions for this category
+        db.delete(TRANSACTION_TABLE_NAME, TRANSACTION_KEY_CATEGORY + " = ?",
+                new String[]{category.getCategory()});
+
         // delete the row
         db.delete(CATEGORY_TABLE_NAME, CATEGORY_KEY_ID + " = ?",
                 new String[]{String.valueOf(category.getId())});

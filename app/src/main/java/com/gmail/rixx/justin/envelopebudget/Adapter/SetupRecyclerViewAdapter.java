@@ -1,5 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget.Adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.EditCategoryActivity;
 import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
@@ -51,7 +53,7 @@ public class SetupRecyclerViewAdapter extends RecyclerView.Adapter<SetupRecycler
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View itemView;
         public TextView categoryTextView;
         public TextView amountTextView;
@@ -61,9 +63,18 @@ public class SetupRecyclerViewAdapter extends RecyclerView.Adapter<SetupRecycler
             super(itemView);
 
             this.itemView = itemView;
+            itemView.setOnClickListener(this);
             categoryTextView = (TextView) itemView.findViewById(R.id.category_name_textview);
             amountTextView = (TextView) itemView.findViewById(R.id.amount_textview);
             refreshTextView = (TextView) itemView.findViewById(R.id.refresh_textview);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(v.getContext(), EditCategoryActivity.class);
+            i.putExtra(v.getContext().getString(R.string.intent_extra_category), data.get(getAdapterPosition()));
+
+            v.getContext().startActivity(i);
         }
     }
 }
