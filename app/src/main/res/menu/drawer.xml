@@ -9,8 +9,7 @@
         <item
             android:id="@+id/action_setup"
             android:icon="@drawable/ic_build_black_24dp"
-            android:title="Setup" />
-        <!-- android:icon="@drawable/ic_action_add" -->
+            android:title="Manage Categories" />
         <item
             android:id="@+id/action_log"
             android:icon="@drawable/ic_history_black_24dp"

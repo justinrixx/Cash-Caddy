@@ -44,10 +44,6 @@ public class Log extends AppCompatActivity implements TaskCallbacks<ArrayList<Tr
         setUpToolbar();
         setUpNavDrawer();
 
-        if (savedInstanceState != null) {
-            transactions = (ArrayList<Transaction>) savedInstanceState.getParcelable(TRANSACTION_ARRAYLIST);
-        }
-
         FragmentManager fm = getSupportFragmentManager();
         mFragment = (GetAllTransactionsFragment) fm.findFragmentByTag(TAG_WORKER_FRAGMENT);
 
@@ -60,6 +56,10 @@ public class Log extends AppCompatActivity implements TaskCallbacks<ArrayList<Tr
 
             // empty until we get the real stuff from the database
             transactions = new ArrayList<>();
+        }
+
+        if (savedInstanceState != null) {
+            transactions = (ArrayList<Transaction>) savedInstanceState.getSerializable(TRANSACTION_ARRAYLIST);
         }
 
         mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
@@ -118,6 +118,13 @@ public class Log extends AppCompatActivity implements TaskCallbacks<ArrayList<Tr
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable(TRANSACTION_ARRAYLIST, transactions);
+    }
+
     /**
      * Get the recyclerview taken care of
      */
@@ -149,9 +156,6 @@ public class Log extends AppCompatActivity implements TaskCallbacks<ArrayList<Tr
 
     @Override
     public void onPostExecute(ArrayList<Transaction>... params) {
-
-        android.util.Log.d("Log Activity", "In onPostExecute");
-
         transactions = params[0];
         mAdapter = new TransactionRecyclerViewAdapter(transactions);
         mRecyclerView.setAdapter(mAdapter);
