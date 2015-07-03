@@ -1,5 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget.Adapter;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import com.gmail.rixx.justin.envelopebudget.R;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +58,7 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public View itemView;
         public TextView dateTextView;
         public TextView amountTextView;
@@ -67,8 +67,18 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
             super(itemView);
 
             this.itemView = itemView;
+            this.itemView.setOnClickListener(this);
+
             dateTextView = (TextView) itemView.findViewById(R.id.date_textview);
             amountTextView = (TextView) itemView.findViewById(R.id.amount_textview);
+        }
+
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+            builder.setTitle(dateTextView.getText().toString())
+                    .setMessage(data.get(getAdapterPosition()).getComment())
+                    .setPositiveButton("OK", null).create().show();
         }
     }
 }
