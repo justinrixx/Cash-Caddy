@@ -7,7 +7,6 @@ import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Populate the categories

@@ -415,15 +415,15 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
      *                timestamp.
      * @return A list containing the results
      */
-    public List<Transaction> getTransactions(String category, long minDate) {
+    public ArrayList<Transaction> getTransactions(String category, long minDate) {
 
-        List<Transaction> list = new ArrayList<>();
+        ArrayList<Transaction> list = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
 
         // build the query string
         Cursor cursor = db.query(TRANSACTION_TABLE_NAME, TRANSACTION_COLUMNS,
-                null, null, null, null, null);
+                TRANSACTION_KEY_CATEGORY + " = ?", new String[] {category}, null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {

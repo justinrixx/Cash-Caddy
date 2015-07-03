@@ -24,9 +24,6 @@ import java.util.List;
  */
 public class CategoryActivityFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private TransactionRecyclerViewAdapter mAdapter;
-    private List<Transaction> data;
     private Category category;
 
     public CategoryActivityFragment() {
@@ -40,18 +37,18 @@ public class CategoryActivityFragment extends Fragment {
         category = ((Category) getActivity().getIntent()
                 .getSerializableExtra(getString(R.string.intent_extra_category)));
 
+        /*
         populateData();
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.transaction_recyclerview);
         if (mRecyclerView != null) {
             setUpRecyclerView();
-        }
+        }*/
 
         // set the remaining amount at the bottom
         TextView remaining = (TextView) rootView.findViewById(R.id.net_amount_textview);
         double net = category.getAmount();
 
-        Log.d("CategoryFragment", "Net: " + String.valueOf(net));
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (net >= 0.0) {
@@ -65,6 +62,7 @@ public class CategoryActivityFragment extends Fragment {
         return rootView;
     }
 
+    /*
     private void setUpRecyclerView() {
         mAdapter = new TransactionRecyclerViewAdapter(data);
 
@@ -76,5 +74,5 @@ public class CategoryActivityFragment extends Fragment {
 
         BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
         data = helper.getTransactions(category.getCategory(), category.getDateLastRefresh());
-    }
+    }*/
 }
