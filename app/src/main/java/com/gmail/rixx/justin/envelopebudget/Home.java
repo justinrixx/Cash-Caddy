@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +16,21 @@ import android.view.View;
 
 import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.WorkerFragment.PopulateCategoriesFragment;
+import com.gmail.rixx.justin.envelopebudget.WorkerFragment.TaskCallbacks;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<Category> >{
+
+    /**
+     * Fields related to the headless fragment used to pull database info
+     */
+    private static final String TAG_WORKER_FRAGMENT = "worker_fragment";
+    private PopulateCategoriesFragment mFragment;
+
+    private static final String KEY_CATEGORIES = "key_categories";
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
@@ -30,12 +39,29 @@ public class Home extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private HomeRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
-    private List<Category> categories;
+    private ArrayList<Category> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (savedInstanceState != null) {
+            categories = (ArrayList<Category>) savedInstanceState.getSerializable(KEY_CATEGORIES);
+        }
+
+        FragmentManager fm = getSupportFragmentManager();
+        mFragment = (PopulateCategoriesFragment) fm.findFragmentByTag(TAG_WORKER_FRAGMENT);
+
+        // If the Fragment is non-null, then it is currently being
+        // retained across a configuration change.
+        if (mFragment == null) {
+            mFragment = new PopulateCategoriesFragment();
+            fm.beginTransaction().add(mFragment, TAG_WORKER_FRAGMENT).commit();
+
+            // empty until we get the real stuff from the database
+            categories = new ArrayList<>();
+        }
 
         setUpToolbar();
         setUpNavDrawer();
@@ -47,9 +73,6 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        // empty until we get the real stuff from the database
-        categories = new ArrayList<>();
-
         mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
         setUpRecyclerView();
     }
@@ -57,10 +80,11 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        populateCategories();
-        mAdapter = new HomeRecyclerViewAdapter(categories);
-        mRecyclerView.setAdapter(mAdapter);
+        //                     If we're coming back to the activity
+        if (mFragment == null || !mFragment.isRunning()) {
+            mFragment = new PopulateCategoriesFragment();
+            getSupportFragmentManager().beginTransaction().add(mFragment, TAG_WORKER_FRAGMENT).commit();
+        }
     }
 
     private void setUpRecyclerView() {
@@ -74,19 +98,11 @@ public class Home extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void populateCategories() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(this);
-
-        // make sure the categories are up to date
-        helper.updateCategories();
-
-        categories = helper.getCategoriesForDisplay();
-
-        // update the current costs
-        for (Category c : categories) {
-            c.setAmount(c.getAmount() - helper.getTotalCost(c.getCategory(), c.getDateLastRefresh()));
-        }
+        outState.putSerializable(KEY_CATEGORIES, categories);
     }
 
     private void setUpToolbar() {
@@ -135,5 +151,31 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPreExecute() {
+        // TODO add a progress thing
+    }
+
+    @Override
+    public void onProgressUpdate(int percent) {
+        // do nothing
+    }
+
+    @Override
+    public void onCancelled() {
+        // eventually show an error message
+    }
+
+    /**
+     * Add the category
+     * @param params
+     */
+    @Override
+    public void onPostExecute(ArrayList<Category>... params) {
+        categories = params[0];
+        mAdapter = new HomeRecyclerViewAdapter(categories);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -186,9 +186,9 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public List<Category> getCategoriesForDisplay() {
+    public ArrayList<Category> getCategoriesForDisplay() {
 
-        List<Category> data = new ArrayList<>();
+        ArrayList<Category> data = new ArrayList<>();
 
         // execute the query
         SQLiteDatabase db = getReadableDatabase();

@@ -7,12 +7,18 @@ import android.support.v4.app.Fragment;
 /**
  * A base headless worker fragment for doing async tasks
  */
-public class WorkerFragment extends Fragment {
+public class WorkerFragment<T> extends Fragment {
+
+    protected boolean isRunning = true;
 
     /**
      * A reference to the activity in order to call all the callbacks in it
      */
-    private TaskCallbacks mCallbacks;
+    protected TaskCallbacks<T> mCallbacks;
+
+    public boolean isRunning() {
+        return isRunning;
+    }
 
     /**
      * When the fragment attaches to the Activity, hold a reference to the activity in order to <p/>
@@ -22,7 +28,7 @@ public class WorkerFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mCallbacks = (TaskCallbacks) activity;
+        mCallbacks = (TaskCallbacks<T>) activity;
     }
 
     /**
