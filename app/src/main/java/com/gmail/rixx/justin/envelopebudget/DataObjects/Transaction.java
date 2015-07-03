@@ -1,12 +1,15 @@
 package com.gmail.rixx.justin.envelopebudget.DataObjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Transaction class used throughout the app. Each transaction represents a row in the transactions
  * table in the database
  */
-public class Transaction implements Serializable {
+public class Transaction implements Serializable, Parcelable {
 
     private int id;
     private String category;
@@ -61,4 +64,39 @@ public class Transaction implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    protected Transaction(Parcel in) {
+        id = in.readInt();
+        category = in.readString();
+        date = in.readLong();
+        cost = in.readDouble();
+        comment = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(category);
+        dest.writeLong(date);
+        dest.writeDouble(cost);
+        dest.writeString(comment);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Transaction> CREATOR = new Parcelable.Creator<Transaction>() {
+        @Override
+        public Transaction createFromParcel(Parcel in) {
+            return new Transaction(in);
+        }
+
+        @Override
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
+        }
+    };
 }
