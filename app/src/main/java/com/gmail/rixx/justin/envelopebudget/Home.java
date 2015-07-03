@@ -2,6 +2,7 @@ package com.gmail.rixx.justin.envelopebudget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +29,8 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
      * Fields related to the headless fragment used to pull database info
      */
     private static final String TAG_WORKER_FRAGMENT = "worker_fragment";
+    private static final String PREFERENCES_FILE = "cashcaddy_settings";
+    private static final String PREF_USED_DRAWER = "USED_DRAWER";
     private PopulateCategoriesFragment mFragment;
 
     private static final String KEY_CATEGORIES = "key_categories";
@@ -41,10 +44,14 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
     private LinearLayoutManager mLayoutManager;
     private ArrayList<Category> categories;
 
+    boolean mUserLearnedDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USED_DRAWER, "false"));
 
         if (savedInstanceState != null) {
             categories = (ArrayList<Category>) savedInstanceState.getSerializable(KEY_CATEGORIES);
@@ -151,6 +158,12 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
                 }
             }
         });
+
+        if (!mUserLearnedDrawer) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            mUserLearnedDrawer = true;
+            saveSharedSetting(this, PREF_USED_DRAWER, "true");
+        }
     }
 
     @Override
@@ -177,5 +190,22 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
         categories = params[0];
         mAdapter = new HomeRecyclerViewAdapter(categories);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    /**
+     * Used to make the nav drawer open the first time only
+     * @param context
+     * @param settingName What to name the preference
+     * @param settingValue The value to save (true or false)
+     */
+    public static void saveSharedSetting(Context context, String settingName, String settingValue) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(settingName, settingValue);
+        editor.apply();
+    }
+    public static String readSharedSetting(Context context, String settingName, String defaultValue) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sharedPref.getString(settingName, defaultValue);
     }
 }
