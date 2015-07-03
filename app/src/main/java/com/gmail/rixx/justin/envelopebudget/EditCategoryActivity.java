@@ -1,9 +1,11 @@
 package com.gmail.rixx.justin.envelopebudget;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,7 +30,7 @@ import java.util.Calendar;
 public class EditCategoryActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private Context mContext;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +70,22 @@ public class EditCategoryActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_delete) {
-            new BudgetSQLiteHelper(this).deleteCategory((Category) getIntent()
-                    .getSerializableExtra(getString(R.string.intent_extra_category)));
 
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Are you sure?");
+            builder.setMessage(getString(R.string.delete_category_warning));
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    new BudgetSQLiteHelper(mContext).deleteCategory((Category) getIntent()
+                            .getSerializableExtra(getString(R.string.intent_extra_category)));
+
+                    finish();
+                }
+            }).setNegativeButton("Cancel", null).create().show();
+
             return true;
         }
 
@@ -152,7 +166,6 @@ public class EditCategoryActivity extends AppCompatActivity {
                     c.setCategory(name);
                     c.setAmount(amount);
                     c.setDateNextRefresh(nextRefresh);
-                    c.setDateLastRefresh(lastRefresh);
                     c.setRefreshCode(refreshCode);
 
                     helper.updateCategory(c);
