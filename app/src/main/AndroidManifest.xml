@@ -35,7 +35,7 @@
         <activity
             android:name=".Setup"
             android:label="@string/title_activity_setup"
-            android:parentActivityName=".Setup">
+            android:parentActivityName=".Setup" >
         </activity>
         <activity
             android:name=".EditCategoryActivity"
@@ -43,6 +43,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gmail.rixx.justin.envelopebudget.Setup" />
+        </activity>
+        <activity
+            android:name=".Log"
+            android:label="@string/title_activity_log" >
         </activity>
     </application>
 

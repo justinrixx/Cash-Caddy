@@ -80,7 +80,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
 
                     new BudgetSQLiteHelper(mContext).deleteCategory((Category) getIntent()
-                            .getSerializableExtra(getString(R.string.intent_extra_category)));
+                            .getParcelableExtra(getString(R.string.intent_extra_category)));
 
                     finish();
                 }
@@ -162,7 +162,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
 
                 if (getIntent().hasExtra(getString(R.string.intent_extra_category))) {
-                    Category c = (Category) getIntent().getSerializableExtra(getString(R.string.intent_extra_category));
+                    Category c = (Category) getIntent().getParcelableExtra(getString(R.string.intent_extra_category));
                     c.setCategory(name);
                     c.setAmount(amount);
                     c.setDateNextRefresh(nextRefresh);

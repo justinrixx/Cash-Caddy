@@ -1,5 +1,7 @@
 package com.gmail.rixx.justin.envelopebudget.WorkerFragment;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -11,37 +13,48 @@ import java.util.ArrayList;
 /**
  * Created by justin on 7/3/15.
  */
-public class GetTransactionsFragment extends WorkerFragment< ArrayList<Transaction> > {
-
-    String category;
-    long minDate;
+public class GetAllTransactionsFragment extends WorkerFragment< ArrayList<Transaction> > {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get the data needed for the database request
-        Bundle args = getArguments();
-        category = args.getString("CATEGORY_NAME");
-        minDate = args.getLong("LAST_REFRESH");
-
         // start up the task
         new GetTransactionsTask().execute();
     }
-
 
     private class GetTransactionsTask extends AsyncTask<Void, Void, ArrayList<Transaction>> {
 
         @Override
         protected ArrayList<Transaction> doInBackground(Void... params) {
 
+            ArrayList<Transaction> list = new ArrayList<>();
+
             BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
-            ArrayList<Transaction> data = helper.getTransactions(category, minDate);
+            SQLiteDatabase db = helper.getReadableDatabase();
+
+            // build the database query
+            Cursor cursor = db.query(helper.TRANSACTION_TABLE_NAME, helper.TRANSACTION_COLUMNS, null, null, null,
+                    null, helper.TRANSACTION_KEY_DATE + " DESC"); // newest transaction first
+
+            // get all the objects
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+
+                    do {
+                        list.add(new Transaction(cursor.getInt(0), cursor.getString(1),
+                                cursor.getInt(2), cursor.getDouble(3), cursor.getString(4)));
+                    } while (cursor.moveToNext());
+
+                    cursor.close();
+                }
+            }
+
+            db.close();
 
             isRunning = false;
-            return data;
+            return list;
         }
-
         @Override
         protected void onPostExecute(ArrayList<Transaction> transactions) {
             mCallbacks.onPostExecute(transactions);
@@ -62,5 +75,4 @@ public class GetTransactionsFragment extends WorkerFragment< ArrayList<Transacti
             mCallbacks.onProgressUpdate(0);
         }
     }
-
 }

@@ -3,13 +3,11 @@ package com.gmail.rixx.justin.envelopebudget.DataObjects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Transaction class used throughout the app. Each transaction represents a row in the transactions
  * table in the database
  */
-public class Transaction implements Serializable, Parcelable {
+public class Transaction implements Parcelable {
 
     private int id;
     private String category;

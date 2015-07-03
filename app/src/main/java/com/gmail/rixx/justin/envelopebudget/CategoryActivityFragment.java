@@ -35,7 +35,7 @@ public class CategoryActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
 
         category = ((Category) getActivity().getIntent()
-                .getSerializableExtra(getString(R.string.intent_extra_category)));
+                .getParcelableExtra(getString(R.string.intent_extra_category)));
 
         /*
         populateData();

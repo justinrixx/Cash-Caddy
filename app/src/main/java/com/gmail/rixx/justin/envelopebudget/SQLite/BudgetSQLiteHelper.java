@@ -23,28 +23,28 @@ public class BudgetSQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "BudgetDB";
 
     // table names
-    private static final String CATEGORY_TABLE_NAME = "categories";
-    private static final String TRANSACTION_TABLE_NAME = "transactions";
+    public static final String CATEGORY_TABLE_NAME = "categories";
+    public static final String TRANSACTION_TABLE_NAME = "transactions";
 
     // category table column names
-    private static final String CATEGORY_KEY_ID          = "id";
-    private static final String CATEGORY_KEY_NAME        = "name";
-    private static final String CATEGORY_KEY_AMOUNT      = "amount";
-    private static final String CATEGORY_KEY_NEXTREFRESH = "nextRefresh";
-    private static final String CATEGORY_KEY_LASTREFRESH = "lastRefresh";
-    private static final String CATEGORY_KEY_REFRESHCODE = "refreshCode";
+    public static final String CATEGORY_KEY_ID          = "id";
+    public static final String CATEGORY_KEY_NAME        = "name";
+    public static final String CATEGORY_KEY_AMOUNT      = "amount";
+    public static final String CATEGORY_KEY_NEXTREFRESH = "nextRefresh";
+    public static final String CATEGORY_KEY_LASTREFRESH = "lastRefresh";
+    public static final String CATEGORY_KEY_REFRESHCODE = "refreshCode";
 
-    private static final String[] CATEGORY_COLUMNS = {CATEGORY_KEY_ID, CATEGORY_KEY_NAME,
+    public static final String[] CATEGORY_COLUMNS = {CATEGORY_KEY_ID, CATEGORY_KEY_NAME,
             CATEGORY_KEY_AMOUNT, CATEGORY_KEY_NEXTREFRESH, CATEGORY_KEY_LASTREFRESH, CATEGORY_KEY_REFRESHCODE};
 
     // transaction table column names
-    private static final String TRANSACTION_KEY_ID       = "id";
-    private static final String TRANSACTION_KEY_CATEGORY = "category";
-    private static final String TRANSACTION_KEY_AMOUNT   = "amount";
-    private static final String TRANSACTION_KEY_COMMENT  = "comment";
-    private static final String TRANSACTION_KEY_DATE     = "date";
+    public static final String TRANSACTION_KEY_ID       = "id";
+    public static final String TRANSACTION_KEY_CATEGORY = "category";
+    public static final String TRANSACTION_KEY_AMOUNT   = "amount";
+    public static final String TRANSACTION_KEY_COMMENT  = "comment";
+    public static final String TRANSACTION_KEY_DATE     = "date";
 
-    private static final String[] TRANSACTION_COLUMNS = {TRANSACTION_KEY_ID, TRANSACTION_KEY_CATEGORY,
+    public static final String[] TRANSACTION_COLUMNS = {TRANSACTION_KEY_ID, TRANSACTION_KEY_CATEGORY,
             TRANSACTION_KEY_DATE, TRANSACTION_KEY_AMOUNT, TRANSACTION_KEY_COMMENT};
 
     public BudgetSQLiteHelper(Context context) {

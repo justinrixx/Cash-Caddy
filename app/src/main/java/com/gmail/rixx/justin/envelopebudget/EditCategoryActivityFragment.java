@@ -40,7 +40,7 @@ public class EditCategoryActivityFragment extends Fragment {
 
         // set the category if we got it
         if (getActivity().getIntent().hasExtra(getResources().getString(R.string.intent_extra_category))) {
-            mCategory = (Category) getActivity().getIntent().getSerializableExtra(getResources().getString(R.string.intent_extra_category));
+            mCategory = (Category) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.intent_extra_category));
         }
 
         date = (TextView) root.findViewById(R.id.date_textview);

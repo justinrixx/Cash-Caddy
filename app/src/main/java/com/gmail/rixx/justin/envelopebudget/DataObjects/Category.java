@@ -3,13 +3,12 @@ package com.gmail.rixx.justin.envelopebudget.DataObjects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by justin on 6/20/15.
  */
-public class Category implements Serializable, Parcelable {
+public class Category implements Parcelable {
 
     public enum RefreshCode {
         BIWEEKLY, MONTHLY

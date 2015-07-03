@@ -132,20 +132,20 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.action_home:
+                    case R.id.action_log: {
+                        Intent i = new Intent(mContext, Log.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+                        startActivity(i);
                         return true;
-                    case R.id.action_setup:
+                    }
+                    case R.id.action_setup: {
                         Intent i = new Intent(mContext, Setup.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                         startActivity(i);
                         return true;
-
-                    case R.id.action_log:
-
-                        return true;
-
+                    }
                     default:
                         return true;
                 }

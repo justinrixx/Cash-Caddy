@@ -41,7 +41,7 @@ public class CategoryActivity extends AppCompatActivity implements TaskCallbacks
         setContentView(R.layout.activity_category);
 
         // get the data out
-        category = (Category) getIntent().getSerializableExtra(getString(R.string.intent_extra_category));
+        category = (Category) getIntent().getParcelableExtra(getString(R.string.intent_extra_category));
 
         setUpToolbar();
 
