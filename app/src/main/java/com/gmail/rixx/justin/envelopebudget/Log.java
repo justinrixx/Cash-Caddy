@@ -92,7 +92,7 @@ public class Log extends AppCompatActivity implements TaskCallbacks<ArrayList<Tr
         }
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_drawer);
-        mNavigationView.getMenu().getItem(1).setChecked(true);
+        mNavigationView.getMenu().getItem(3).setChecked(true);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
