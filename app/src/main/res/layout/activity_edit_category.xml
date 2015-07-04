@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar" />
 
@@ -27,7 +27,8 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_done_white_24dp"
-        app:backgroundTint="@color/accent" />
+        app:backgroundTint="@color/accent"
+        app:borderWidth="0dp" />
 
 </android.support.design.widget.CoordinatorLayout>
 

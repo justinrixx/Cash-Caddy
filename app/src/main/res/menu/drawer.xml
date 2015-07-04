@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_build_black_24dp"
             android:title="Manage Categories" />
         <item
+            android:id="@+id/action_chart"
+            android:icon="@drawable/ic_equalizer_black_24dp"
+            android:title="Charts" />
+        <item
             android:id="@+id/action_log"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="Log" />
