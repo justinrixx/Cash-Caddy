@@ -48,6 +48,10 @@
             android:name=".Log"
             android:label="@string/title_activity_log" >
         </activity>
+        <activity
+            android:name=".ChartActivity"
+            android:label="@string/title_activity_chart" >
+        </activity>
     </application>
 
 </manifest>

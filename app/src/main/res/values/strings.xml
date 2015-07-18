@@ -11,4 +11,5 @@
     <string name="intent_extra_category">CATEGORY_OBJECT</string>
     <string name="delete_category_warning">Are you sure you want to delete this category? This cannot be reversed and will remove all transactions in this category as well.</string>
     <string name="title_activity_log">Log</string>
+    <string name="title_activity_chart">ChartActivity</string>
 </resources>
