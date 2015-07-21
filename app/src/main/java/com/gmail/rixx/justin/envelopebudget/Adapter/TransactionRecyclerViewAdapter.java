@@ -1,5 +1,6 @@
 package com.gmail.rixx.justin.envelopebudget.Adapter;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 import com.gmail.rixx.justin.envelopebudget.R;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -74,10 +76,24 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
             builder.setTitle(dateTextView.getText().toString())
                     .setMessage(data.get(getAdapterPosition()).getComment())
+                    .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
+
+                            helper.deleteTransaction(data.get(getAdapterPosition()));
+
+                            // remove the item from on screen too
+                            data.remove(getAdapterPosition());
+                            TransactionRecyclerViewAdapter.this.notifyItemRemoved(getAdapterPosition());
+
+                            // TODO update the net
+                        }
+                    })
                     .setPositiveButton("OK", null).create().show();
         }
     }

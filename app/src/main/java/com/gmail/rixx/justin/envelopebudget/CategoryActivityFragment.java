@@ -34,16 +34,8 @@ public class CategoryActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
 
-        category = ((Category) getActivity().getIntent()
-                .getParcelableExtra(getString(R.string.intent_extra_category)));
-
-        /*
-        populateData();
-
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.transaction_recyclerview);
-        if (mRecyclerView != null) {
-            setUpRecyclerView();
-        }*/
+        category = getActivity().getIntent()
+                .getParcelableExtra(getString(R.string.intent_extra_category));
 
         // set the remaining amount at the bottom
         TextView remaining = (TextView) rootView.findViewById(R.id.net_amount_textview);
@@ -61,18 +53,4 @@ public class CategoryActivityFragment extends Fragment {
 
         return rootView;
     }
-
-    /*
-    private void setUpRecyclerView() {
-        mAdapter = new TransactionRecyclerViewAdapter(data);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void populateData() {
-
-        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
-        data = helper.getTransactions(category.getCategory(), category.getDateLastRefresh());
-    }*/
 }
