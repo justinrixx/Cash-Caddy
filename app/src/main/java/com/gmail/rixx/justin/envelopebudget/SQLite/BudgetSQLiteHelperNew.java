@@ -38,7 +38,7 @@ public class BudgetSQLiteHelperNew extends SQLiteOpenHelper {
         final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE "
                 + BudgetContract.CategoryEntry.TABLE_NAME + " ("
                 + BudgetContract.CategoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BudgetContract.CategoryEntry.COLUMN_NAME + " TEXT NOT NULL,"
+                + BudgetContract.CategoryEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL,"
                 + BudgetContract.CategoryEntry.COLUMN_AMOUNT + " REAL NOT NULL,"
                 + BudgetContract.CategoryEntry.COLUMN_LASTREFRESH + " INTEGER NOT NULL,"
                 + BudgetContract.CategoryEntry.COLUMN_NEXTREFRESH + " INTEGER NOT NULL,"
@@ -54,5 +54,9 @@ public class BudgetSQLiteHelperNew extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL("DROP TABLE IF EXISTS " + BudgetContract.TransactionEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + BudgetContract.CategoryEntry.TABLE_NAME);
+
+        onCreate(db);
     }
 }
