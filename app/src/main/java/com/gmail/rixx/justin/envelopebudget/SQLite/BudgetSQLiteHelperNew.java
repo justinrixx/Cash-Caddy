@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class BudgetSQLiteHelperNew extends SQLiteOpenHelper {
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     static final String DATABASE_NAME = "budget.db";
 
