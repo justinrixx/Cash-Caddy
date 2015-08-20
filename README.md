@@ -6,9 +6,9 @@ a log to see your past transactions, this will have you on track in no time! I u
 
 It's still in devlopment; I'm using as my learning app for now. But a stable version is on the play store! [Get it here!](https://play.google.com/store/apps/details?id=com.gmail.rixx.justin.envelopebudget)
 
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/home.png)
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/new-transaction.png)
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/dialog.png)
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/nav_drawer.png)
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/category.png)
-![ScreenShot](https://github.com/justinrixx/Cash-Caddy/blob/master/screenshots/detail.png)
+![ScreenShot](/screenshots/home.png)
+![ScreenShot](/screenshots/new-transaction.png)
+![ScreenShot](/screenshots/dialog.png)
+![ScreenShot](/screenshots/nav_drawer.png)
+![ScreenShot](/screenshots/category.png)
+![ScreenShot](/screenshots/detail.png)
