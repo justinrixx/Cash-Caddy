@@ -1,6 +1,10 @@
 package com.gmail.rixx.justin.envelopebudget.SQLite;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.net.Uri;
 import android.provider.BaseColumns;
+
 
 /**
  * Created by justin on 7/24/15.
@@ -8,11 +12,39 @@ import android.provider.BaseColumns;
 public class BudgetContract {
 
     /**
-     * Normalize date method?
+     * Content authority for the content provider. This is the package name
      */
-    // TODO
+    public static final String CONTENT_AUTHORITY = "com.gmail.rixx.justin.envelopebudget";
 
+    /**
+     * The base URI to fetch content from the content provider
+     */
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    /**
+     * Possible paths from the base URI. These refer to their respective database tables
+     */
+    public static final String PATH_CATEGORIES = "categories";
+    public static final String PATH_TRANSACTIONS = "transactions";
+
+
+    /**
+     * All the constants defined for the Category table in the database
+     */
     public static final class CategoryEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_CATEGORIES).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CATEGORIES;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CATEGORIES;
+
+        public static Uri buildCategoryUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
 
         public static final String TABLE_NAME = "categories";
 
@@ -32,7 +64,26 @@ public class BudgetContract {
         public static final String COLUMN_REFRESHCODE = "refreshCode";
     }
 
+    /**
+     * All the constants defined for the Transaction table in the database
+     */
     public static final class TransactionEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRANSACTIONS).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TRANSACTIONS;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TRANSACTIONS;
+
+        public static Uri buildTransactionsForCategory(long id) {
+            return CONTENT_URI.buildUpon()
+                    .appendQueryParameter(COLUMN_CATEGORY_KEY, String.valueOf(id)).build();
+        }
+
+        // TODO all the other ones
 
         public static final String TABLE_NAME = "transactions";
 
