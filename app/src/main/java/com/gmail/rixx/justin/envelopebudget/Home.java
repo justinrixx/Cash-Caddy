@@ -1,11 +1,16 @@
 package com.gmail.rixx.justin.envelopebudget;
 
+import android.content.AsyncQueryHandler;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,21 +22,24 @@ import android.view.View;
 
 import com.gmail.rixx.justin.envelopebudget.Adapter.HomeRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetContract;
 import com.gmail.rixx.justin.envelopebudget.WorkerFragment.PopulateCategoriesFragment;
 import com.gmail.rixx.justin.envelopebudget.WorkerFragment.TaskCallbacks;
 
 import java.util.ArrayList;
 
 
-public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<Category> >{
+public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<Category> > {
 
-    /**
-     * Fields related to the headless fragment used to pull database info
-     */
+
     private static final String TAG_WORKER_FRAGMENT = "worker_fragment";
+    private PopulateCategoriesFragment mFragment;
+
     private static final String PREFERENCES_FILE = "cashcaddy_settings";
     private static final String PREF_USED_DRAWER = "USED_DRAWER";
-    private PopulateCategoriesFragment mFragment;
+
+    private static final int TOKEN_CATEGORIES   = 0;
+    private static final int TOKEN_TRANSACTIONS = 1;
 
     private static final String KEY_CATEGORIES = "key_categories";
 
@@ -43,6 +51,7 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
     private HomeRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ArrayList<Category> categories;
+    private AsyncQueryHandler mQueryHandler;
 
     boolean mUserLearnedDrawer;
 
@@ -50,6 +59,9 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        /* Set up AsyncQueryHandler */
+        mQueryHandler = new HomeQueryHandler(getContentResolver());
 
         mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USED_DRAWER, "false"));
 
@@ -69,6 +81,15 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
             // empty until we get the real stuff from the database
             categories = new ArrayList<>();
         }
+
+        /* ASYNC QUERY TO DB */
+        String[] projection = { BudgetContract.CategoryEntry._ID, BudgetContract.CategoryEntry.COLUMN_NAME,
+        BudgetContract.CategoryEntry.COLUMN_AMOUNT, BudgetContract.CategoryEntry.COLUMN_NEXTREFRESH,
+        BudgetContract.CategoryEntry.COLUMN_LASTREFRESH, BudgetContract.CategoryEntry.COLUMN_REFRESHCODE };
+
+        mQueryHandler.startQuery(TOKEN_CATEGORIES, null, BudgetContract.CategoryEntry.CONTENT_URI,
+                projection, null, null, null);
+        /* /ASYNC QUERY TO DB */
 
         setUpToolbar();
         setUpNavDrawer();
@@ -207,5 +228,53 @@ public class Home extends AppCompatActivity implements TaskCallbacks< ArrayList<
     public static String readSharedSetting(Context context, String settingName, String defaultValue) {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
         return sharedPref.getString(settingName, defaultValue);
+    }
+
+    private static class HomeQueryHandler extends AsyncQueryHandler {
+
+        public HomeQueryHandler(ContentResolver cr) {
+            super(cr);
+        }
+
+        @Override
+        protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+
+            switch (token) {
+
+                case TOKEN_CATEGORIES: {
+
+                    if (null == cursor) {
+                        android.util.Log.e("CASH CADDY", "Cursor is null");
+                    }
+
+                    int iID          = cursor.getColumnIndex(BudgetContract.CategoryEntry._ID);
+                    int iName        = cursor.getColumnIndex(BudgetContract.CategoryEntry.COLUMN_NAME);
+                    int iAmount      = cursor.getColumnIndex(BudgetContract.CategoryEntry.COLUMN_AMOUNT);
+                    int iNextRefresh = cursor.getColumnIndex(BudgetContract.CategoryEntry.COLUMN_NEXTREFRESH);
+                    int iLastRefresh = cursor.getColumnIndex(BudgetContract.CategoryEntry.COLUMN_LASTREFRESH);
+                    int iRefreshCode = cursor.getColumnIndex(BudgetContract.CategoryEntry.COLUMN_REFRESHCODE);
+
+                    if (cursor.moveToFirst()) {
+                        do {
+
+                            android.util.Log.e("CASH CADDY", "Category: " + cursor.getString(iName));
+
+                                /*
+                                categories.add(new Category(
+                                        cursor.getInt(iID),
+                                        cursor.getString(iName),
+                                        cursor.getDouble(iAmount),
+                                        cursor.getInt(iNextRefresh),
+                                        cursor.getInt(iLastRefresh),
+                                        BudgetContract.getRefreshcode(cursor.getString(iRefreshCode))));
+                                */
+                        } while (cursor.moveToNext());
+
+                        cursor.close();
+                    }
+                }
+            }
+
+        }
     }
 }

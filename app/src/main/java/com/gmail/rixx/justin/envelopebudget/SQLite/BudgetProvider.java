@@ -29,19 +29,19 @@ public class BudgetProvider extends ContentProvider {
 
         // for all the transactions in the table
         sUriMatcher.addURI(BudgetContract.CONTENT_AUTHORITY,
-                BudgetContract.TransactionEntry.TABLE_NAME, TRANSACTIONS);
+                BudgetContract.PATH_TRANSACTIONS, TRANSACTIONS);
 
         // for one transaction by id
         sUriMatcher.addURI(BudgetContract.CONTENT_AUTHORITY,
-                BudgetContract.TransactionEntry.TABLE_NAME + "/#", TRANSACTION_ID);
+                BudgetContract.PATH_TRANSACTIONS + "/#", TRANSACTION_ID);
 
         // for all the categories in the table
         sUriMatcher.addURI(BudgetContract.CONTENT_AUTHORITY,
-                BudgetContract.CategoryEntry.TABLE_NAME, CATEGORIES);
+                BudgetContract.PATH_CATEGORIES, CATEGORIES);
 
         // for one category by id
         sUriMatcher.addURI(BudgetContract.CONTENT_AUTHORITY,
-                BudgetContract.CategoryEntry.TABLE_NAME + "/#", CATEGORY_ID);
+                BudgetContract.PATH_CATEGORIES + "/#", CATEGORY_ID);
     }
 
 
@@ -101,11 +101,7 @@ public class BudgetProvider extends ContentProvider {
         // if we made it this far, it's a valid URI, so we can query the database with the info
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
-        Cursor result = db.query(table, projection, selection, selectionArgs, null, null, sortOrder);
-
-        db.close();
-
-        return result;
+        return db.query(table, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     /**

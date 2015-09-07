@@ -52,6 +52,13 @@
             android:name=".ChartActivity"
             android:label="@string/title_activity_chart" >
         </activity>
+
+        <provider
+            android:authorities="com.gmail.rixx.justin.envelopebudget.provider"
+            android:name=".SQLite.BudgetProvider"
+            android:exported="false"
+            android:enabled="true" />
+
     </application>
 
 </manifest>

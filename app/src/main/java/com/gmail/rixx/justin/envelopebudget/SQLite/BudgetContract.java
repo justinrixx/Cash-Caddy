@@ -4,6 +4,9 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
+
+import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
 
 
 /**
@@ -16,7 +19,7 @@ public class BudgetContract {
     /**
      * Content authority for the content provider. This is the package name
      */
-    public static final String CONTENT_AUTHORITY = "com.gmail.rixx.justin.envelopebudget";
+    public static final String CONTENT_AUTHORITY = "com.gmail.rixx.justin.envelopebudget.provider";
 
     /**
      * The base URI to fetch content from the content provider
@@ -99,4 +102,33 @@ public class BudgetContract {
         public static final String COLUMN_DATE         = "date";
     }
 
+    /**
+     * Get a string from a refresh code
+     * @param code The refresh code to change to a string
+     * @return A string corresponding with the refresh code
+     */
+    public static String getRefreshString (Category.RefreshCode code) {
+        if (code == Category.RefreshCode.BIWEEKLY) {
+            return "biweekly";
+        } else {
+            return "monthly";
+        }
+    }
+
+    /**
+     * Get a refresh code from a string
+     * @param refreshString The string representing a refresh code
+     * @return A refresh code corresponding to the string given
+     */
+    public static Category.RefreshCode getRefreshcode(String refreshString) {
+        switch (refreshString) {
+            case "biweekly":
+                return Category.RefreshCode.BIWEEKLY;
+            case "monthly":
+                return Category.RefreshCode.MONTHLY;
+            default:
+                Log.wtf("SQLite Helper", "Unknown refresh string!");
+                return Category.RefreshCode.MONTHLY;
+        }
+    }
 }
