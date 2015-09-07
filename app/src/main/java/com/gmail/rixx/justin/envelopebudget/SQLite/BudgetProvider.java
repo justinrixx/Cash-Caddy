@@ -1,6 +1,7 @@
 package com.gmail.rixx.justin.envelopebudget.SQLite;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -9,6 +10,8 @@ import android.net.Uri;
 
 /**
  * Created by justin on 7/25/15.
+ *
+ * This class is the implementation of a ContentProvider for all the data in the app
  */
 public class BudgetProvider extends ContentProvider {
 
@@ -133,9 +136,63 @@ public class BudgetProvider extends ContentProvider {
         }
     }
 
+    /**
+     * Insert an entry into the content provider
+     * @param uri The URI specifying which table to insert into
+     * @param values The values for the required columns
+     * @return A URI pointing to the newly created item
+     */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+
+        final String ERROR_VALUES = "Provided ContentValues does not contain all"
+                + " the necessary columns. You must provide every column specified in the contract class.";
+
+        switch (sUriMatcher.match(uri)) {
+
+            case TRANSACTIONS: {
+
+                // check for incomplete data
+                if (!values.containsKey(BudgetContract.TransactionEntry.COLUMN_CATEGORY_KEY) ||
+                        !values.containsKey(BudgetContract.TransactionEntry.COLUMN_AMOUNT) ||
+                        !values.containsKey(BudgetContract.TransactionEntry.COLUMN_COMMENT) ||
+                        !values.containsKey(BudgetContract.TransactionEntry.COLUMN_DATE)) {
+                    throw new IllegalArgumentException(ERROR_VALUES);
+                }
+
+                // do the insertion
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                long id = db.insert(BudgetContract.TransactionEntry.TABLE_NAME, null, values);
+
+                db.close();
+
+                return ContentUris.withAppendedId(uri, id);
+            }
+
+            case CATEGORIES: {
+
+                // check for incomplete data
+                if (!values.containsKey(BudgetContract.CategoryEntry.COLUMN_NAME) ||
+                        !values.containsKey(BudgetContract.CategoryEntry.COLUMN_AMOUNT) ||
+                        !values.containsKey(BudgetContract.CategoryEntry.COLUMN_NEXTREFRESH) ||
+                        !values.containsKey(BudgetContract.CategoryEntry.COLUMN_LASTREFRESH) ||
+                        !values.containsKey(BudgetContract.CategoryEntry.COLUMN_REFRESHCODE)) {
+                    throw new IllegalArgumentException(ERROR_VALUES);
+                }
+
+                // do the insertion
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                long id = db.insert(BudgetContract.CategoryEntry.TABLE_NAME, null, values);
+
+                db.close();
+
+                return ContentUris.withAppendedId(uri, id);
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid URI for insert method: " + uri.toString());
     }
 
     @Override
