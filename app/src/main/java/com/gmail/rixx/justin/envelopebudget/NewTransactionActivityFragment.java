@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class NewTransactionActivityFragment extends Fragment {
 
     private void populateData() {
 
-        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+        BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(getActivity());
         List<Category> list = helper.getCategoriesForDisplay();
 
         for (int i = 0; i < list.size(); ++i) {

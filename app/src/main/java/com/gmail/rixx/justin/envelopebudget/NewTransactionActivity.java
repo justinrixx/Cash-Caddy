@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.Calendar;
 
@@ -54,7 +54,7 @@ public class NewTransactionActivity extends AppCompatActivity {
                         Calendar.getInstance().getTimeInMillis() / 1000, amount, comment);
 
                 // write it to the database
-                BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);
+                BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(mContext);
                 helper.addTransaction(transaction);
 
                 // get out
@@ -74,7 +74,7 @@ public class NewTransactionActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary_dark));
             }
         }
     }

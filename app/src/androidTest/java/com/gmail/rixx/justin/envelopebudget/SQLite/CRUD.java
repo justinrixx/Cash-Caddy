@@ -26,7 +26,7 @@ public class CRUD extends AndroidTestCase {
     public void testWriteAndReadCategory() throws Exception {
 
         // get a reference to the database
-        BudgetSQLiteHelperNew helper = new BudgetSQLiteHelperNew(mContext);
+        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(mContext);
         SQLiteDatabase db = helper.getWritableDatabase();
 
         // construct the object to insert

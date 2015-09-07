@@ -15,7 +15,7 @@ import android.net.Uri;
  */
 public class BudgetProvider extends ContentProvider {
 
-    private BudgetSQLiteHelperNew mOpenHelper;
+    private BudgetSQLiteHelper mOpenHelper;
 
     static final int TRANSACTIONS = 100;
     static final int TRANSACTION_ID = 101;
@@ -52,7 +52,7 @@ public class BudgetProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
 
-        mOpenHelper = new BudgetSQLiteHelperNew(getContext());
+        mOpenHelper = new BudgetSQLiteHelper(getContext());
 
         return true;
     }

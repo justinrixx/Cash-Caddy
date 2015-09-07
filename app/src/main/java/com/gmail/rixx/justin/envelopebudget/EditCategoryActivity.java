@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -79,7 +80,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    new BudgetSQLiteHelper(mContext).deleteCategory((Category) getIntent()
+                    new BudgetSQLiteHelperOld(mContext).deleteCategory((Category) getIntent()
                             .getParcelableExtra(getString(R.string.intent_extra_category)));
 
                     finish();
@@ -159,7 +160,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                 long lastRefresh = 0;
 
-                BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
+                BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(v.getContext());
 
                 if (getIntent().hasExtra(getString(R.string.intent_extra_category))) {
                     Category c = (Category) getIntent().getParcelableExtra(getString(R.string.intent_extra_category));
@@ -189,7 +190,7 @@ public class EditCategoryActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary_dark));
         }
     }
 }

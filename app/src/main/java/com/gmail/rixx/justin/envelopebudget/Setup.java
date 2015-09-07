@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.gmail.rixx.justin.envelopebudget.Adapter.SetupRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +131,7 @@ public class Setup extends AppCompatActivity {
 
     private void populateCategories() {
 
-        BudgetSQLiteHelper helper = new BudgetSQLiteHelper(this);
+        BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(this);
         categories = helper.getCategories();
     }
 }

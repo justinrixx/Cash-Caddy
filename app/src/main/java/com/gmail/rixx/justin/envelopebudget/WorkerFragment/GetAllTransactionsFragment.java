@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class GetAllTransactionsFragment extends WorkerFragment< ArrayList<Transa
 
             ArrayList<Transaction> list = new ArrayList<>();
 
-            BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+            BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(getActivity());
             SQLiteDatabase db = helper.getReadableDatabase();
 
             // build the database query

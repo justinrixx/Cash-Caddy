@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
 import com.gmail.rixx.justin.envelopebudget.R;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -83,7 +83,7 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            BudgetSQLiteHelper helper = new BudgetSQLiteHelper(v.getContext());
+                            BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(v.getContext());
 
                             helper.deleteTransaction(data.get(getAdapterPosition()));
 

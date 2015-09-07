@@ -2,21 +2,15 @@ package com.gmail.rixx.justin.envelopebudget;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gmail.rixx.justin.envelopebudget.Adapter.TransactionRecyclerViewAdapter;
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 
 /**
@@ -44,10 +38,10 @@ public class CategoryActivityFragment extends Fragment {
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (net >= 0.0) {
-            remaining.setTextColor(getResources().getColor(R.color.green));
+            remaining.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
             remaining.setText("+$" + String.valueOf(df.format(net)));
         } else {
-            remaining.setTextColor(getResources().getColor(R.color.red));
+            remaining.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
             remaining.setText("-$" + String.valueOf(df.format(Math.abs(net))));
         }
 

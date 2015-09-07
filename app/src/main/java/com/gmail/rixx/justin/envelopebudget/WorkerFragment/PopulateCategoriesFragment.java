@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Category;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public class PopulateCategoriesFragment extends WorkerFragment< ArrayList<Catego
          */
         @Override
         protected ArrayList<Category> doInBackground(Void... params) {
-            BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+            BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(getActivity());
 
             // make sure the categories are up to date
             helper.updateCategories();

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.gmail.rixx.justin.envelopebudget.DataObjects.Transaction;
-import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelper;
+import com.gmail.rixx.justin.envelopebudget.SQLite.BudgetSQLiteHelperOld;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class GetTransactionsFragment extends WorkerFragment< ArrayList<Transacti
         @Override
         protected ArrayList<Transaction> doInBackground(Void... params) {
 
-            BudgetSQLiteHelper helper = new BudgetSQLiteHelper(getActivity());
+            BudgetSQLiteHelperOld helper = new BudgetSQLiteHelperOld(getActivity());
             ArrayList<Transaction> data = helper.getTransactions(category, minDate);
 
             isRunning = false;
