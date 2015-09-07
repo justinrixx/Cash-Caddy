@@ -8,6 +8,8 @@ import android.provider.BaseColumns;
 
 /**
  * Created by justin on 7/24/15.
+ *
+ * This is the contract for the database, as well as the BudgetProvider class
  */
 public class BudgetContract {
 
@@ -78,12 +80,9 @@ public class BudgetContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TRANSACTIONS;
 
-        public static Uri buildTransactionsForCategory(long id) {
-            return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_CATEGORY_KEY, String.valueOf(id)).build();
+        public static Uri buildTransactionUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
         }
-
-        // TODO all the other ones
 
         public static final String TABLE_NAME = "transactions";
 
