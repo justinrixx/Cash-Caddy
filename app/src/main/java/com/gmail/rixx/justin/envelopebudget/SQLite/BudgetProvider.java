@@ -195,8 +195,45 @@ public class BudgetProvider extends ContentProvider {
         throw new IllegalArgumentException("Invalid URI for insert method: " + uri.toString());
     }
 
+    /**
+     * Delete an entry from the ContentProvider. You cannot delete multiple entries.
+     * @param uri The URI pointing to the entry to delete. This must include an ID of an item
+     * @param selection ignored
+     * @param selectionArgs ignored
+     * @return The number of rows deleted
+     */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        switch (sUriMatcher.match(uri)) {
+
+            case TRANSACTION_ID: {
+
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                int numAffected = db.delete(BudgetContract.TransactionEntry.TABLE_NAME,
+                        BudgetContract.TransactionEntry._ID + " = ? ",
+                        new String[] { uri.getLastPathSegment() });
+
+                db.close();
+
+                return numAffected;
+            }
+
+            case CATEGORY_ID: {
+
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                int numAffected = db.delete(BudgetContract.CategoryEntry.TABLE_NAME,
+                        BudgetContract.CategoryEntry._ID + " = ? ",
+                        new String[] { uri.getLastPathSegment() });
+
+                db.close();
+
+                return numAffected;
+            }
+        }
+
         return 0;
     }
 
