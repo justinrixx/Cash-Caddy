@@ -24,8 +24,8 @@ public class BudgetContract {
     /**
      * Possible paths from the base URI. These refer to their respective database tables
      */
-    public static final String PATH_CATEGORIES = "categories";
-    public static final String PATH_TRANSACTIONS = "transactions";
+    public static final String PATH_CATEGORIES = "category";
+    public static final String PATH_TRANSACTIONS = "transaction";
 
 
     /**
@@ -37,10 +37,10 @@ public class BudgetContract {
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_CATEGORIES).build();
 
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CATEGORIES;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "." + PATH_CATEGORIES;
 
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CATEGORIES;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "." + PATH_CATEGORIES;
 
         public static Uri buildCategoryUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
