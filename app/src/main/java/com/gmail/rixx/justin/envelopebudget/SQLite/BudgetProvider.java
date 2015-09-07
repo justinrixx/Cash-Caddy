@@ -237,8 +237,47 @@ public class BudgetProvider extends ContentProvider {
         return 0;
     }
 
+    /**
+     * Update entries in the ContentProvider. You may not use a URI pointing to a specific <p/>
+     * entry, you should instead use the URI pointing to the table and specify the ID using the selection <p/>
+     * and selectionArgs arguments.
+     *
+     * @param uri The URI specifying which table to update entries in
+     * @param values The columns to update
+     * @param selection The SQLite selection statement
+     * @param selectionArgs The SQLite selection arguments
+     * @return The number of entries affected
+     */
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        switch (sUriMatcher.match(uri)) {
+
+            case TRANSACTIONS: {
+
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                int numAffected = db.update(BudgetContract.TransactionEntry.TABLE_NAME, values,
+                        selection, selectionArgs);
+
+                db.close();
+
+                return numAffected;
+            }
+
+            case CATEGORIES: {
+
+                SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+                int numAffected = db.update(BudgetContract.CategoryEntry.TABLE_NAME, values,
+                        selection, selectionArgs);
+
+                db.close();
+
+                return numAffected;
+            }
+        }
+
         return 0;
     }
 }
